@@ -8,7 +8,7 @@ export const loginWithEmail = async (email, password) => {
       .signInWithEmailAndPassword(email, password);
     return user;
   } catch (error) {
-    // TODO: Catch different error codes
+    // TODO: handle error
     console.log('loginUser -> error', error);
   }
 };
@@ -17,11 +17,12 @@ export const logout = async () => {
   try {
     await firebase.auth().signOut();
   } catch (error) {
+    // TODO: handle error
     console.log('logout -> error', error);
   }
 };
 
-export const signInWithGoogle = async () => {
+export const loginWithGoogle = async () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
   const scopes = ['profile', 'email'];
@@ -29,6 +30,7 @@ export const signInWithGoogle = async () => {
   try {
     return await firebase.auth().signInWithPopup(provider);
   } catch (error) {
+    // TODO: handle error
     console.log('signInWithGoogle -> error', error);
   }
 };

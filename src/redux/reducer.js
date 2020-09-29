@@ -19,6 +19,12 @@ const appReducer = (state = initialState, action) => {
         user: action.user
       };
 
+    case types.LOGOUT_SUCCESS:
+      return {
+        ...state,
+        user: null
+      };
+
     default:
       return state;
   }

@@ -34,3 +34,5 @@ export const loginWithGoogle = async () => {
     console.log('signInWithGoogle -> error', error);
   }
 };
+
+export default firebase;

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import fb from './firebase/fb';
+import fb from './firebase/fbAuth';
 
-import Login from './pages/Login';
+import AppShell from './components/AppShell';
 
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from './redux/types';
 
@@ -19,11 +19,7 @@ const App = () => {
     });
   }, []);
 
-  return (
-    <div>
-      <Login />
-    </div>
-  );
+  return <AppShell />;
 };
 
 export default App;

@@ -16,7 +16,10 @@
       "jest": true
   },
   "rules": {
-      "indent": ["error", 2],
+      "indent": ["error",       2,
+        {
+          "SwitchCase": 1
+        }],
       "space-before-function-paren": "off",
       "react/prefer-stateless-function": "warn",
       "import/no-extraneous-dependencies": [
@@ -35,6 +38,7 @@
               "allowTaggedTemplates": true
           }
       ],
-      "no-underscore-dangle": [2, { "allow": ["__REDUX_DEVTOOLS_EXTENSION__"] }]
+      "no-underscore-dangle": [2, { "allow": ["__REDUX_DEVTOOLS_EXTENSION__"] }],
+      "comma-dangle": ["error", "never"]
   }
 }

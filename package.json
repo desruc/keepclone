@@ -8,9 +8,14 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --hot",
-    "build": "cross-env NODE_ENV=production webpack"
+    "build": "cross-env NODE_ENV=production webpack",
+    "lint": "eslint ./src/**/**.js",
+    "lint:fix": "eslint ./src/**/**.js --fix"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "firebase": "^7.21.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
@@ -31,6 +36,7 @@
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
     "css-loader": "^4.3.0",
+    "dotenv": "^8.2.0",
     "eslint": "^7.10.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.12.0",

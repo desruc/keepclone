@@ -1,0 +1,3 @@
+export const AUTH_LOADING_STATE = 'auth/AUTH_LOADING_STATE';
+
+export const LOGIN_SUCCESS = 'auth/AUTH_LOGIN_SUCCESS';

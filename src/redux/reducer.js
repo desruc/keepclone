@@ -2,7 +2,8 @@ import * as types from './types';
 
 const initialState = {
   authLoading: false,
-  user: null
+  user: null,
+  colorMode: 'light'
 };
 
 const appReducer = (state = initialState, action) => {
@@ -25,9 +26,18 @@ const appReducer = (state = initialState, action) => {
         user: null
       };
 
+    case types.CHANGE_COLOR_MODE:
+      return {
+        ...state,
+        colorMode: action.colorMode
+      };
+
     default:
       return state;
   }
 };
 
 export default appReducer;
+
+export const selectUser = (state) => state.app.user;
+export const selectColorMode = (state) => state.app.colorMode;

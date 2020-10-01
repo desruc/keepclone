@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 
@@ -10,12 +12,16 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
+import Switch from '@material-ui/core/Switch';
 import List from '@material-ui/core/List';
 
 // Icons
 import MenuIcon from '@material-ui/icons/Menu';
 
+// Keep-it components
 import DrawerItem from './DrawerItem';
+
+import { CHANGE_COLOR_MODE } from '../redux/types';
 
 const drawerWidth = 280;
 
@@ -74,9 +80,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Navigation() {
+export default function Navigation({ colorMode }) {
   // Hooks
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
 
   // Hook state
@@ -109,6 +116,17 @@ export default function Navigation() {
     [classes.drawerOpen]: open,
     [classes.drawerClose]: !open
   });
+
+  // Constants
+  const lightMode = colorMode === 'light';
+
+  // Toggle color modes
+  const toggleColorMode = () => {
+    dispatch({
+      type: CHANGE_COLOR_MODE,
+      colorMode: lightMode ? 'dark' : 'light'
+    });
+  };
 
   // Separate menu items to avoid duplication
   const drawerLinks = (
@@ -151,6 +169,15 @@ export default function Navigation() {
             >
               <MenuIcon />
             </IconButton>
+          </Box>
+          <Box>
+            <Switch
+              checked={!lightMode}
+              onChange={toggleColorMode}
+              name="themeSwitch"
+              inputProps={{ 'aria-label': 'theme switch' }}
+              size="small"
+            />
           </Box>
         </Toolbar>
       </AppBar>

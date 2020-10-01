@@ -2,3 +2,5 @@ export const AUTH_LOADING_STATE = 'auth/AUTH_LOADING_STATE';
 
 export const LOGIN_SUCCESS = 'auth/AUTH_LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'auth/AUTH_LOGOUT_SUCCESS';
+
+export const CHANGE_COLOR_MODE = 'app/CHANGE_COLOR_MODE';

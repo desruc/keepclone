@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Navigation({ colorMode }) {
+const Navigation = ({ colorMode }) => {
   // Hooks
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -206,4 +206,10 @@ export default function Navigation({ colorMode }) {
       </Hidden>
     </>
   );
-}
+};
+
+Navigation.propTypes = {
+  colorMode: PropTypes.string.isRequired
+};
+
+export default Navigation;

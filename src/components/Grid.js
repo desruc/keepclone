@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
+
+import { useMasonryLayout } from '../utils/hooks';
 
 const useStyles = makeStyles({
   grid: {
@@ -16,8 +17,14 @@ const useStyles = makeStyles({
 const Grid = ({ children }) => {
   // Hooks
   const classes = useStyles();
+  const gridRef = useRef(null);
+  useMasonryLayout(gridRef);
 
-  return <Box className={classes.grid}>{children}</Box>;
+  return (
+    <div ref={gridRef} className={classes.grid}>
+      {children}
+    </div>
+  );
 };
 
 Grid.propTypes = {

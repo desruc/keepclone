@@ -86,7 +86,7 @@ const DraggableGridItem = ({ currentItem, onDrop }) => {
 
   return (
     <div ref={ref} className={classes.gridItem} style={{ opacity }}>
-      {currentItem.text}
+      <div>{currentItem.text}</div>
     </div>
   );
 };

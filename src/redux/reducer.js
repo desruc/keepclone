@@ -3,7 +3,8 @@ import * as types from './types';
 const initialState = {
   authLoading: false,
   user: null,
-  colorMode: 'light'
+  colorMode: 'light',
+  notes: []
 };
 
 const appReducer = (state = initialState, action) => {
@@ -32,6 +33,12 @@ const appReducer = (state = initialState, action) => {
         colorMode: action.colorMode
       };
 
+    case types.REORDER_LOCAL_NOTES:
+      return {
+        ...state,
+        notes: action.notes
+      };
+
     default:
       return state;
   }
@@ -41,3 +48,4 @@ export default appReducer;
 
 export const selectUser = (state) => state.app.user;
 export const selectColorMode = (state) => state.app.colorMode;
+export const selectNotes = (state) => state.app.notes;

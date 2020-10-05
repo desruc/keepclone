@@ -10,7 +10,8 @@ const useStyles = makeStyles((theme) => ({
   gridItem: {
     cursor: 'move',
     border: `1px solid ${theme.palette.divider}`,
-    borderRadius: theme.shape.borderRadius
+    borderRadius: theme.shape.borderRadius,
+    padding: theme.spacing(1)
   }
 }));
 
@@ -93,7 +94,7 @@ const DraggableGridItem = ({ currentItem, onDrop }) => {
 
 DraggableGridItem.propTypes = {
   currentItem: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.string,
     index: PropTypes.number,
     text: PropTypes.string
   }).isRequired,

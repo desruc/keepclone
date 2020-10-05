@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import cloneDeep from 'lodash.clonedeep';
 
+import NoteInput from '../components/NoteInput';
 import Grid from '../components/Grid';
 import DraggableGridItem from '../components/DraggableGridItem';
 
@@ -37,13 +38,20 @@ const Notes = () => {
   );
 
   return (
-    <Grid>
-      {notes
-        .sort((a, b) => a.index - b.index)
-        .map((e) => (
-          <DraggableGridItem key={e.id} currentItem={e} onDrop={reorderItems} />
-        ))}
-    </Grid>
+    <main>
+      <NoteInput />
+      <Grid>
+        {notes
+          .sort((a, b) => a.index - b.index)
+          .map((e) => (
+            <DraggableGridItem
+              key={e.id}
+              currentItem={e}
+              onDrop={reorderItems}
+            />
+          ))}
+      </Grid>
+    </main>
   );
 };
 

@@ -39,6 +39,12 @@ const appReducer = (state = initialState, action) => {
         notes: action.notes
       };
 
+    case types.SAVE_LOCAL_NOTE:
+      return {
+        ...state,
+        notes: [...state.notes, action.note]
+      };
+
     default:
       return state;
   }

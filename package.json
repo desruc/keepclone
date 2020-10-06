@@ -72,6 +72,9 @@
     "setupFiles": [
       "<rootDir>/config/jest.config"
     ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/config/testing-library-react.setup"
+    ],
     "transform": {
       "^.+\\.js$": "babel-jest"
     }

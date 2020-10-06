@@ -13,7 +13,7 @@ describe('<Appshell /> tests', () => {
       </BrowserRouter>
     );
 
-    expect(container.querySelector('#page-wrap')).toBeTruthy();
-    expect(container.querySelector('#content-container')).toBeTruthy();
+    expect(container.querySelector('#page-wrap')).toBeInTheDocument();
+    expect(container.querySelector('#content-container')).toBeInTheDocument();
   });
 });

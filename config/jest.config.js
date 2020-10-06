@@ -15,6 +15,5 @@ module.exports = {
   transform: {
     '^.+\\.js?$': 'babel-jest'
   },
-  verbose: true,
-  setupTestFrameworkScriptFile: './testing-library-react.setup.js'
+  verbose: true
 };

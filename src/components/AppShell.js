@@ -34,9 +34,13 @@ const AppShell = () => {
     <DndProvider backend={HTML5Backend}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Box display="flex">
+        <Box id="page-wrap" display="flex">
           <Navigation colorMode={colorMode} />
-          <Container maxWidth="xl" className={classes.container}>
+          <Container
+            id="content-container"
+            maxWidth="xl"
+            className={classes.container}
+          >
             <Switch>
               <Route path="/" component={Notes} />
             </Switch>

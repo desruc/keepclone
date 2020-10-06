@@ -9,13 +9,14 @@ module.exports = (api) => {
         '@babel/preset-env',
         {
           useBuiltIns: 'entry',
-          corejs: '3.0.0',
-        },
+          corejs: '3.0.0'
+        }
       ],
-      '@babel/preset-react',
+      '@babel/preset-react'
     ],
-    plugins: !api.env('production')
-      ? devPlugins
-      : ['@babel/plugin-transform-runtime'],
+    plugins:
+      !api.env('production') && !api.env('test')
+        ? devPlugins
+        : ['@babel/plugin-transform-runtime']
   };
 };

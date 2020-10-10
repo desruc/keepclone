@@ -4,7 +4,8 @@ const initialState = {
   authLoading: false,
   user: null,
   colorMode: 'light',
-  notes: []
+  notes: [],
+  labels: []
 };
 
 const appReducer = (state = initialState, action) => {
@@ -45,6 +46,12 @@ const appReducer = (state = initialState, action) => {
         notes: [...state.notes, action.note]
       };
 
+    case types.SAVE_LOCAL_LABEL:
+      return {
+        ...state,
+        labels: [...state.labels, action.label]
+      };
+
     default:
       return state;
   }
@@ -55,3 +62,4 @@ export default appReducer;
 export const selectUser = (state) => state.app.user;
 export const selectColorMode = (state) => state.app.colorMode;
 export const selectNotes = (state) => state.app.notes;
+export const selectLabels = (state) => state.app.labels;

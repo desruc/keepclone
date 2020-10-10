@@ -7,3 +7,5 @@ export const CHANGE_COLOR_MODE = 'app/CHANGE_COLOR_MODE';
 
 export const REORDER_LOCAL_NOTES = 'app/REORDER_LOCAL_NOTES';
 export const SAVE_LOCAL_NOTE = 'app/SAVE_LOCAL_NOTE';
+
+export const SAVE_LOCAL_LABEL = 'app/SAVE_LOCAL_LABEL';

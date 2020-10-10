@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 
@@ -12,6 +12,7 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 
 import Navigation from './Navigation';
+import ManageLabelsModal from './Modals/ManageLabelsModal';
 import Notes from '../pages/Notes';
 
 import { lightTheme, darkTheme } from '../constants/themes';
@@ -26,8 +27,18 @@ const useStyles = makeStyles((theme) => ({
 const AppShell = () => {
   // Hooks
   const classes = useStyles();
+
+  // Local state
+  const [showLabelModal, setShowLabelModal] = useState(false);
+
+  // Redux
   const colorMode = useSelector((state) => selectColorMode(state));
 
+  // Event handlers
+  const openLabelModal = () => setShowLabelModal(true);
+  const closeLabelModal = () => setShowLabelModal(false);
+
+  // Constants
   const theme = colorMode === 'light' ? lightTheme : darkTheme;
 
   return (
@@ -35,7 +46,7 @@ const AppShell = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Box id="page-wrap" display="flex">
-          <Navigation colorMode={colorMode} />
+          <Navigation colorMode={colorMode} openLabelManager={openLabelModal} />
           <Container
             id="content-container"
             maxWidth="xl"
@@ -46,6 +57,10 @@ const AppShell = () => {
             </Switch>
           </Container>
         </Box>
+        <ManageLabelsModal
+          open={showLabelModal}
+          closeModal={closeLabelModal}
+        />
       </ThemeProvider>
     </DndProvider>
   );

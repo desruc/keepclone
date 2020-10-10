@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 
@@ -12,6 +12,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 import Switch from '@material-ui/core/Switch';
 import List from '@material-ui/core/List';
 
@@ -21,7 +22,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 // Keep-it components
 import DrawerItem from './DrawerItem';
 
+import { selectLabels } from '../redux/reducer';
 import { CHANGE_COLOR_MODE } from '../redux/types';
+
+import { getPageHeading } from '../utils/helpers';
 
 const drawerWidth = 280;
 
@@ -77,17 +81,23 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar
+  },
+  pageHeading: {
+    fontWeight: 600
   }
 }));
 
-const Navigation = ({ colorMode }) => {
+const Navigation = ({ colorMode, openLabelManager }) => {
   // Hooks
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   // Hook state
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
+
+  // Redux
+  const labels = useSelector((state) => selectLabels(state));
 
   // Event handlers
   const toggleDrawer = () => {
@@ -138,7 +148,22 @@ const Navigation = ({ colorMode }) => {
         active={pathname === '/notes' || pathname === '/'}
         drawerOpen={open}
       />
-      {/* TODO: Render tag links */}
+      {labels.map((label) => (
+        <DrawerItem
+          key={label}
+          to={`/label#${label}`}
+          label={label}
+          active={pathname.includes('/label') && hash.substring(1) === label}
+          drawerOpen={open}
+        />
+      ))}
+      <DrawerItem
+        variant="button"
+        icon="pencil"
+        label="Edit labels"
+        onClick={openLabelManager}
+        drawerOpen={open}
+      />
       <DrawerItem
         to="/archive"
         icon="archive"
@@ -160,7 +185,7 @@ const Navigation = ({ colorMode }) => {
     <>
       <AppBar position="fixed" className={appBarClasses}>
         <Toolbar>
-          <Box flex={1}>
+          <Box flex={1} display="flex" alignItems="center">
             <IconButton
               color="inherit"
               aria-label="open menu"
@@ -169,6 +194,13 @@ const Navigation = ({ colorMode }) => {
             >
               <MenuIcon />
             </IconButton>
+            <Typography
+              className={classes.pageHeading}
+              color="textPrimary"
+              noWrap
+            >
+              {getPageHeading(pathname, labels, hash.substring(1))}
+            </Typography>
           </Box>
           <Box>
             <Switch
@@ -209,7 +241,8 @@ const Navigation = ({ colorMode }) => {
 };
 
 Navigation.propTypes = {
-  colorMode: PropTypes.string.isRequired
+  colorMode: PropTypes.string.isRequired,
+  openLabelManager: PropTypes.func.isRequired
 };
 
 export default Navigation;

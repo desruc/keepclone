@@ -148,7 +148,7 @@ const Navigation = ({ colorMode, openLabelManager }) => {
       {labels.map(({ label }) => (
         <DrawerItem
           key={label}
-          to={`/label#${label}`}
+          to={`/label/${label}`}
           label={label}
           active={pathname.includes('/label') && hash.substring(1) === label}
           drawerOpen={open}

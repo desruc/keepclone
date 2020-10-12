@@ -14,6 +14,8 @@ import Container from '@material-ui/core/Container';
 import Navigation from './Navigation';
 import ManageLabelsModal from './Modals/ManageLabelsModal';
 import Notes from '../pages/Notes';
+import LabelNotes from '../pages/LabelNotes';
+import NotFound from '../pages/NotFound';
 
 import { lightTheme, darkTheme } from '../constants/themes';
 import { selectColorMode } from '../redux/reducer';
@@ -53,14 +55,13 @@ const AppShell = () => {
             className={classes.container}
           >
             <Switch>
-              <Route path="/" component={Notes} />
+              <Route exact path={['/', '/notes']} component={Notes} />
+              <Route exact path="/label/:label" component={LabelNotes} />
+              <Route component={NotFound} />
             </Switch>
           </Container>
         </Box>
-        <ManageLabelsModal
-          open={showLabelModal}
-          closeModal={closeLabelModal}
-        />
+        <ManageLabelsModal open={showLabelModal} closeModal={closeLabelModal} />
       </ThemeProvider>
     </DndProvider>
   );

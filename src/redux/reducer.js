@@ -52,6 +52,21 @@ const appReducer = (state = initialState, action) => {
         labels: [...state.labels, action.label]
       };
 
+    case types.UPDATE_LOCAL_LABEL:
+      return {
+        ...state,
+        labels: state.labels.map((label) => {
+          if (label.id === action.label.id) return action.label;
+          return label;
+        })
+      };
+
+    case types.BULK_UPDATE_LOCAL_LABELS:
+      return {
+        ...state,
+        labels: action.labels
+      };
+
     default:
       return state;
   }

@@ -14,6 +14,7 @@ import BulbIcon from '@material-ui/icons/EmojiObjectsOutlined';
 import TagIcon from '@material-ui/icons/LabelOutlined';
 import ArchiveIcon from '@material-ui/icons/ArchiveOutlined';
 import TrashIcon from '@material-ui/icons/DeleteOutlined';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 const useStyles = makeStyles((theme) => ({
   hide: {
@@ -120,7 +121,8 @@ const DrawerItem = ({
     bulb: <BulbIcon />,
     tag: <TagIcon />,
     archive: <ArchiveIcon />,
-    trash: <TrashIcon />
+    trash: <TrashIcon />,
+    pencil: <EditOutlinedIcon />
   };
 
   const isLink = variant === 'link';
@@ -136,6 +138,9 @@ const DrawerItem = ({
       >
         <ListItemIcon>{icons[icon]}</ListItemIcon>
         <ListItemText
+          primaryTypographyProps={{
+            noWrap: true
+          }}
           primary={label}
           className={listItemTextClass}
           classes={{ primary: classes.listItemText }}
@@ -150,7 +155,7 @@ DrawerItem.propTypes = {
   to: PropTypes.string,
   onClick: PropTypes.func,
   active: PropTypes.bool,
-  icon: PropTypes.oneOf(['bulb', 'tag', 'archive', 'trash']),
+  icon: PropTypes.oneOf(['bulb', 'tag', 'archive', 'trash', 'pencil']),
   label: PropTypes.string.isRequired,
   drawerOpen: PropTypes.bool.isRequired
 };

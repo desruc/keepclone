@@ -12,7 +12,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import Switch from '@material-ui/core/Switch';
 import List from '@material-ui/core/List';
 
@@ -24,8 +23,6 @@ import DrawerItem from './DrawerItem';
 
 import { selectLabels } from '../redux/reducer';
 import { CHANGE_COLOR_MODE } from '../redux/types';
-
-import { getPageHeading } from '../utils/helpers';
 
 const drawerWidth = 280;
 
@@ -148,7 +145,7 @@ const Navigation = ({ colorMode, openLabelManager }) => {
         active={pathname === '/notes' || pathname === '/'}
         drawerOpen={open}
       />
-      {labels.map((label) => (
+      {labels.map(({ label }) => (
         <DrawerItem
           key={label}
           to={`/label#${label}`}
@@ -194,13 +191,6 @@ const Navigation = ({ colorMode, openLabelManager }) => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              className={classes.pageHeading}
-              color="textPrimary"
-              noWrap
-            >
-              {getPageHeading(pathname, labels, hash.substring(1))}
-            </Typography>
           </Box>
           <Box>
             <Switch

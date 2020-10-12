@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -19,8 +20,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ModalBase = ({ open, handleClose, children }) => {
+const ModalBase = ({ open, handleClose, paperClassName, children }) => {
   const classes = useStyles();
+
+  const paperClass = clsx({
+    [classes.paper]: true,
+    [paperClassName]: Boolean(paperClassName)
+  });
 
   return (
     <Modal
@@ -36,7 +42,7 @@ const ModalBase = ({ open, handleClose, children }) => {
       }}
     >
       <Fade in={open}>
-        <div className={classes.paper}>{children}</div>
+        <div className={paperClass}>{children}</div>
       </Fade>
     </Modal>
   );
@@ -45,7 +51,12 @@ const ModalBase = ({ open, handleClose, children }) => {
 ModalBase.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
+  paperClassName: PropTypes.string,
   children: PropTypes.node.isRequired
+};
+
+ModalBase.defaultProps = {
+  paperClassName: ''
 };
 
 export default ModalBase;

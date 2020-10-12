@@ -11,13 +11,15 @@ import Button from '@material-ui/core/Button';
 import ModalBase from './ModalBase';
 import NewLabelInput from './NewLabelInput';
 import ExistingLabelInput from './ExistingLabelInput';
+import ConfirmationModal from './ConfirmationModal';
 
 import { selectLabels } from '../../redux/reducer';
 
 import {
   SAVE_LOCAL_LABEL,
   UPDATE_LOCAL_LABEL,
-  BULK_UPDATE_LOCAL_LABELS
+  BULK_UPDATE_LOCAL_LABELS,
+  DELETE_LOCAL_LABEL
 } from '../../redux/types';
 
 import { randomId } from '../../utils/helpers';
@@ -34,10 +36,7 @@ const useStyles = makeStyles((theme) => ({
   closeWrap: {
     padding: theme.spacing(1),
     display: 'flex',
-    justifyContent: 'flex-end',
-    '& .MuiButton-label': {
-      textTransform: 'none'
-    }
+    justifyContent: 'flex-end'
   }
 }));
 
@@ -77,6 +76,10 @@ const ManageLabelsModal = ({ open, closeModal }) => {
     consolidateLabels([], labels)
   );
 
+  // Confirmation modal open state
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [selectedLabel, setSelectedLabel] = useState(null);
+
   // Add new labels to stack for editing
   useEffect(() => {
     if (!isEqual(existingLabels, labels)) {
@@ -85,6 +88,24 @@ const ManageLabelsModal = ({ open, closeModal }) => {
   }, [labels]);
 
   // Event handlers
+  const onDeleteLabel = (id) => {
+    setSelectedLabel(id);
+    setConfirmationOpen(true);
+  };
+
+  const closeConfirmationModal = () => {
+    setConfirmationOpen(false);
+    setSelectedLabel(null);
+  };
+
+  const confirmDeleteLabel = () => {
+    dispatch({
+      type: DELETE_LOCAL_LABEL,
+      labelId: selectedLabel
+    });
+    closeConfirmationModal();
+  };
+
   const clearNewLabel = () => {
     setNewLabelState({
       ...newLabelState,
@@ -137,10 +158,6 @@ const ManageLabelsModal = ({ open, closeModal }) => {
       type: UPDATE_LOCAL_LABEL,
       label
     });
-  };
-
-  const onDeleteExistingLabel = (id) => {
-    // TODO
   };
 
   const saveAllChanges = () => {
@@ -198,7 +215,7 @@ const ManageLabelsModal = ({ open, closeModal }) => {
               label={existingLabel}
               onChange={handleExistingLabelChange}
               onSave={saveExistingLabel}
-              onDelete={onDeleteExistingLabel}
+              onDelete={onDeleteLabel}
             />
           ))}
         </List>
@@ -206,6 +223,13 @@ const ManageLabelsModal = ({ open, closeModal }) => {
       <div className={classes.closeWrap}>
         <Button onClick={handleClose}>Done</Button>
       </div>
+      <ConfirmationModal
+        open={confirmationOpen}
+        handleClose={closeConfirmationModal}
+        confirmButtonLabel="Delete"
+        prompt="We’ll delete this label and remove it from all of your Keep Clone notes. Your notes won’t be deleted."
+        onConfirm={confirmDeleteLabel}
+      />
     </ModalBase>
   );
 };

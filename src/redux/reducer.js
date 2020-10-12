@@ -67,6 +67,12 @@ const appReducer = (state = initialState, action) => {
         labels: action.labels
       };
 
+    case types.DELETE_LOCAL_LABEL:
+      return {
+        ...state,
+        labels: state.labels.filter((l) => l.id !== action.labelId)
+      };
+
     default:
       return state;
   }

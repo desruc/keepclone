@@ -1,8 +1,17 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
-export const lightTheme = createMuiTheme({});
+const overrides = {
+  MuiButton: {
+    root: {
+      textTransform: 'none'
+    }
+  }
+};
+
+export const lightTheme = createMuiTheme({ overrides });
 
 export const darkTheme = createMuiTheme({
+  overrides,
   palette: {
     type: 'dark'
   }

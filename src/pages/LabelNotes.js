@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams, Redirect } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +16,8 @@ import {
   selectLabels
 } from '../redux/reducer';
 
+import { SET_SELECTED_LABEL } from '../redux/types';
+
 const useStyles = makeStyles((theme) => ({
   archive: {
     marginTop: theme.spacing(4)
@@ -31,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const LabelNotes = () => {
   // Hooks
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { label: labelParam } = useParams();
 
   // Redux
@@ -41,6 +44,15 @@ const LabelNotes = () => {
   const matchedLabelObject = allLabels.find(
     ({ label }) => label === labelParam
   );
+
+  useEffect(() => {
+    if (matchedLabelObject) {
+      dispatch({
+        type: SET_SELECTED_LABEL,
+        label: matchedLabelObject
+      });
+    }
+  }, [matchedLabelObject]);
 
   if (!matchedLabelObject) return <Redirect to="/404" />;
 

@@ -5,7 +5,8 @@ const initialState = {
   user: null,
   colorMode: 'light',
   notes: [],
-  labels: []
+  labels: [],
+  selectedLabel: null
 };
 
 const appReducer = (state = initialState, action) => {
@@ -115,6 +116,12 @@ const appReducer = (state = initialState, action) => {
         notes: state.notes.filter(({ id }) => id !== action.noteId)
       };
 
+    case types.SET_SELECTED_LABEL:
+      return {
+        ...state,
+        selectedLabel: action.label
+      };
+
     default:
       return state;
   }
@@ -131,3 +138,4 @@ export const selectArchivedNotes = (state) =>
 export const selectTrashedNotes = (state) =>
   state.app.notes.filter(({ trashed }) => trashed);
 export const selectLabels = (state) => state.app.labels;
+export const selectSelectedLabel = (state) => state.app.selectedLabel;

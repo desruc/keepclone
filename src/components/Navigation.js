@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 
-// Material-ui components
 import { makeStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
 import Drawer from '@material-ui/core/Drawer';
@@ -12,17 +11,31 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 import Switch from '@material-ui/core/Switch';
 import List from '@material-ui/core/List';
 
-// Icons
 import MenuIcon from '@material-ui/icons/Menu';
 
-// Keep-it components
 import DrawerItem from './DrawerItem';
 
-import { selectLabels } from '../redux/reducer';
+import { selectLabels, selectSelectedLabel } from '../redux/reducer';
 import { CHANGE_COLOR_MODE } from '../redux/types';
+
+const computeHeading = (pathname, currentLabel) => {
+  if (currentLabel) return currentLabel.label;
+
+  switch (pathname) {
+    case '/archive':
+      return 'Archive';
+
+    case '/trash':
+      return 'Trash';
+
+    default:
+      return 'Notes';
+  }
+};
 
 const drawerWidth = 280;
 
@@ -88,13 +101,14 @@ const Navigation = ({ colorMode, openLabelManager }) => {
   // Hooks
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { pathname, hash } = useLocation();
+  const { pathname } = useLocation();
 
   // Hook state
   const [open, setOpen] = useState(true);
 
   // Redux
   const labels = useSelector((state) => selectLabels(state));
+  const selectedLabel = useSelector((state) => selectSelectedLabel(state));
 
   // Event handlers
   const toggleDrawer = () => {
@@ -125,6 +139,7 @@ const Navigation = ({ colorMode, openLabelManager }) => {
   });
 
   // Constants
+  const computedLabel = pathname.includes('/label/') && selectedLabel;
   const lightMode = colorMode === 'light';
 
   // Toggle color modes
@@ -150,7 +165,7 @@ const Navigation = ({ colorMode, openLabelManager }) => {
           key={label}
           to={`/label/${label}`}
           label={label}
-          active={pathname.includes('/label') && hash.substring(1) === label}
+          active={pathname.includes('/label/') && label === selectedLabel}
           drawerOpen={open}
         />
       ))}
@@ -191,6 +206,9 @@ const Navigation = ({ colorMode, openLabelManager }) => {
             >
               <MenuIcon />
             </IconButton>
+            <Typography color="textPrimary" className={classes.pageHeading}>
+              {computeHeading(pathname, computedLabel)}
+            </Typography>
           </Box>
           <Box>
             <Switch

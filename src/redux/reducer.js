@@ -73,6 +73,48 @@ const appReducer = (state = initialState, action) => {
         labels: state.labels.filter((l) => l.id !== action.labelId)
       };
 
+    case types.ARCHIVE_LOCAL_NOTE:
+      return {
+        ...state,
+        notes: state.notes.map((note) => {
+          if (note.id === action.noteId) return { ...note, archived: true };
+          return note;
+        })
+      };
+
+    case types.UNARCHIVE_LOCAL_NOTE:
+      return {
+        ...state,
+        notes: state.notes.map((note) => {
+          if (note.id === action.noteId) return { ...note, archived: false };
+          return note;
+        })
+      };
+
+    case types.DELETE_LOCAL_NOTE:
+      return {
+        ...state,
+        notes: state.notes.map((note) => {
+          if (note.id === action.noteId) return { ...note, trashed: true };
+          return note;
+        })
+      };
+
+    case types.RESTORE_LOCAL_NOTE:
+      return {
+        ...state,
+        notes: state.notes.map((note) => {
+          if (note.id === action.noteId) return { ...note, trashed: false };
+          return note;
+        })
+      };
+
+    case types.PERMANETLY_DELETE_LOCAL_NOTE:
+      return {
+        ...state,
+        notes: state.notes.filter(({ id }) => id !== action.noteId)
+      };
+
     default:
       return state;
   }
@@ -82,7 +124,8 @@ export default appReducer;
 
 export const selectUser = (state) => state.app.user;
 export const selectColorMode = (state) => state.app.colorMode;
-export const selectActiveNotes = (state) => state.app.notes;
+export const selectActiveNotes = (state) =>
+  state.app.notes.filter(({ archived, trashed }) => !archived && !trashed);
 export const selectArchivedNotes = (state) =>
   state.app.notes.filter(({ archived }) => archived);
 export const selectTrashedNotes = (state) =>

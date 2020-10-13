@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import NoNotes from '../components/NoNotes';
 import Grid from '../components/Grid';
 import GridItem from '../components/GridItem';
+import NoteToolbar from '../components/NoteToolbar/NoteToolbar';
 
 import { selectArchivedNotes } from '../redux/reducer';
 
@@ -22,7 +23,19 @@ const Archive = () => {
             {archivedNotes
               .sort((a, b) => a.index - b.index)
               .map((e) => (
-                <GridItem key={e.id} currentItem={e} />
+                <GridItem
+                  key={e.id}
+                  currentItem={e}
+                  footerComponent={
+                    <NoteToolbar
+                      noteId={e.id}
+                      unarchiveItem
+                      deleteItem
+                      changeLabels
+                      changeColour
+                    />
+                  }
+                />
               ))}
           </Grid>
         </section>

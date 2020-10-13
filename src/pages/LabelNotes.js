@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import NoNotes from '../components/NoNotes';
 import Grid from '../components/Grid';
 import GridItem from '../components/GridItem';
+import NoteToolbar from '../components/NoteToolbar/NoteToolbar';
 
 import {
   selectActiveNotes,
@@ -62,7 +63,19 @@ const LabelNotes = () => {
             {filteredActiveNotes
               .sort((a, b) => a.index - b.index)
               .map((e) => (
-                <GridItem key={e.id} currentItem={e} />
+                <GridItem
+                  key={e.id}
+                  currentItem={e}
+                  footerComponent={
+                    <NoteToolbar
+                      noteId={e.id}
+                      archiveItem
+                      deleteItem
+                      changeLabels
+                      changeColour
+                    />
+                  }
+                />
               ))}
           </Grid>
         </section>
@@ -72,7 +85,19 @@ const LabelNotes = () => {
           <Typography className={classes.label}>Archive</Typography>
           <Grid>
             {archivedNotes.map((e) => (
-              <GridItem key={e.id} currentItem={e} />
+              <GridItem
+                key={e.id}
+                currentItem={e}
+                footerComponent={
+                  <NoteToolbar
+                    noteId={e.id}
+                    unarchiveItem
+                    deleteItem
+                    changeLabels
+                    changeColour
+                  />
+                }
+              />
             ))}
           </Grid>
         </section>

@@ -5,6 +5,7 @@ import cloneDeep from 'lodash.clonedeep';
 import NoteInput from '../components/NoteInput';
 import Grid from '../components/Grid';
 import DraggableGridItem from '../components/DraggableGridItem';
+import NoteToolbar from '../components/NoteToolbar/NoteToolbar';
 
 import { REORDER_LOCAL_NOTES } from '../redux/types';
 import { selectActiveNotes } from '../redux/reducer';
@@ -48,6 +49,15 @@ const Notes = () => {
               key={e.id}
               currentItem={e}
               onDrop={reorderItems}
+              footerComponent={
+                <NoteToolbar
+                  noteId={e.id}
+                  changeLabels
+                  changeColour
+                  archiveItem
+                  deleteItem
+                />
+              }
             />
           ))}
       </Grid>

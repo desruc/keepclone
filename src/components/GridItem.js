@@ -7,17 +7,36 @@ const useStyles = makeStyles((theme) => ({
   gridItem: {
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: theme.shape.borderRadius,
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    '&:hover': {
+      '& .note-toolbar': {
+        opacity: 1
+      }
+    }
+  },
+  dragging: {
+    opacity: 0
+  },
+  inner: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%'
+  },
+  content: {
+    flex: 1
   }
 }));
 
-const GridItem = ({ currentItem }) => {
+const GridItem = ({ currentItem, footerComponent }) => {
   // Hooks
   const classes = useStyles();
 
   return (
     <div className={classes.gridItem}>
-      <div>{currentItem.text}</div>
+      <div className={classes.inner}>
+        <div className={classes.content}>{currentItem.text}</div>
+        {footerComponent}
+      </div>
     </div>
   );
 };
@@ -27,7 +46,12 @@ GridItem.propTypes = {
     id: PropTypes.string,
     index: PropTypes.number,
     text: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  footerComponent: PropTypes.node
+};
+
+GridItem.defaultProps = {
+  footerComponent: null
 };
 
 export default GridItem;

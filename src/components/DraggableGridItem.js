@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
+import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -8,15 +9,31 @@ import dndTypes from '../constants/dndTypes';
 
 const useStyles = makeStyles((theme) => ({
   gridItem: {
-    cursor: 'move',
+    cursor: 'default',
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: theme.shape.borderRadius,
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    '&:hover': {
+      '& .note-toolbar': {
+        opacity: 1
+      }
+    }
+  },
+  dragging: {
+    opacity: 0
+  },
+  inner: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%'
+  },
+  content: {
+    flex: 1
   }
 }));
 
 // Adapted from https://react-dnd.github.io/react-dnd/examples/sortable/simple
-const DraggableGridItem = ({ currentItem, onDrop }) => {
+const DraggableGridItem = ({ currentItem, onDrop, footerComponent }) => {
   // Hooks
   const classes = useStyles();
   const ref = useRef(null);
@@ -85,9 +102,17 @@ const DraggableGridItem = ({ currentItem, onDrop }) => {
 
   const opacity = isDragging ? 0 : 1;
 
+  const gridItemClass = clsx({
+    [classes.gridItem]: true,
+    [classes.dragging]: isDragging
+  });
+
   return (
-    <div ref={ref} className={classes.gridItem} style={{ opacity }}>
-      <div>{currentItem.text}</div>
+    <div ref={ref} className={gridItemClass} style={{ opacity }}>
+      <div className={classes.inner}>
+        <div className={classes.content}>{currentItem.text}</div>
+        {footerComponent}
+      </div>
     </div>
   );
 };
@@ -98,7 +123,12 @@ DraggableGridItem.propTypes = {
     index: PropTypes.number,
     text: PropTypes.string
   }).isRequired,
-  onDrop: PropTypes.func.isRequired
+  onDrop: PropTypes.func.isRequired,
+  footerComponent: PropTypes.node
+};
+
+DraggableGridItem.defaultProps = {
+  footerComponent: null
 };
 
 export default DraggableGridItem;

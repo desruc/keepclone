@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
 import { SAVE_LOCAL_NOTE } from '../redux/types';
-import { selectNotes } from '../redux/reducer';
+import { selectActiveNotes } from '../redux/reducer';
 
 import { useOnClickOutside } from '../utils/hooks';
 
@@ -34,7 +34,7 @@ const NoteInput = () => {
   const containerRef = useRef(null);
 
   // Redux
-  const notes = useSelector((state) => selectNotes(state));
+  const notes = useSelector((state) => selectActiveNotes(state));
 
   // Helpers
   const getEmptyTextNote = (index) => ({

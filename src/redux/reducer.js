@@ -82,5 +82,9 @@ export default appReducer;
 
 export const selectUser = (state) => state.app.user;
 export const selectColorMode = (state) => state.app.colorMode;
-export const selectNotes = (state) => state.app.notes;
+export const selectActiveNotes = (state) => state.app.notes;
+export const selectArchivedNotes = (state) =>
+  state.app.notes.filter(({ archived }) => archived);
+export const selectTrashedNotes = (state) =>
+  state.app.notes.filter(({ trashed }) => trashed);
 export const selectLabels = (state) => state.app.labels;

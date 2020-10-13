@@ -15,6 +15,8 @@ import Navigation from './Navigation';
 import ManageLabelsModal from './Modals/ManageLabelsModal';
 import Notes from '../pages/Notes';
 import LabelNotes from '../pages/LabelNotes';
+import Archive from '../pages/Archive';
+import Trash from '../pages/Trash';
 import NotFound from '../pages/NotFound';
 
 import { lightTheme, darkTheme } from '../constants/themes';
@@ -57,6 +59,8 @@ const AppShell = () => {
             <Switch>
               <Route exact path={['/', '/notes']} component={Notes} />
               <Route exact path="/label/:label" component={LabelNotes} />
+              <Route exact path="/archive" component={Archive} />
+              <Route exact path="/trash" component={Trash} />
               <Route component={NotFound} />
             </Switch>
           </Container>

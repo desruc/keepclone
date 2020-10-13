@@ -7,14 +7,14 @@ import Grid from '../components/Grid';
 import DraggableGridItem from '../components/DraggableGridItem';
 
 import { REORDER_LOCAL_NOTES } from '../redux/types';
-import { selectNotes } from '../redux/reducer';
+import { selectActiveNotes } from '../redux/reducer';
 
 const Notes = () => {
   // Hooks
   const dispatch = useDispatch();
 
   // Redux
-  const notes = useSelector((state) => selectNotes(state));
+  const notes = useSelector((state) => selectActiveNotes(state));
 
   // Event handlers
   const reorderLocalItems = (newNotes) => {

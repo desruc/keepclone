@@ -9,7 +9,11 @@ import NoNotes from '../components/NoNotes';
 import Grid from '../components/Grid';
 import GridItem from '../components/GridItem';
 
-import { selectNotes, selectLabels } from '../redux/reducer';
+import {
+  selectActiveNotes,
+  selectArchivedNotes,
+  selectLabels
+} from '../redux/reducer';
 
 const useStyles = makeStyles((theme) => ({
   archive: {
@@ -30,7 +34,8 @@ const LabelNotes = () => {
 
   // Redux
   const allLabels = useSelector((state) => selectLabels(state));
-  const notes = useSelector((state) => selectNotes(state));
+  const activeNotes = useSelector((state) => selectActiveNotes(state));
+  const archivedNotes = useSelector((state) => selectArchivedNotes(state));
 
   const matchedLabelObject = allLabels.find(
     ({ label }) => label === labelParam
@@ -38,15 +43,15 @@ const LabelNotes = () => {
 
   if (!matchedLabelObject) return <Redirect to="/404" />;
 
-  const activeNotes = notes.filter(({ labels, archived }) =>
-    labels.some((l) => l === matchedLabelObject.label && !archived)
+  const filteredActiveNotes = activeNotes.filter(({ labels }) =>
+    labels.some((l) => l === matchedLabelObject.label)
   );
 
-  const archivedNotes = notes.filter(({ labels, archived }) =>
-    labels.some((l) => l === matchedLabelObject.label && archived)
+  const filteredArchivedNotes = archivedNotes.filter(({ labels }) =>
+    labels.some((l) => l === matchedLabelObject.label)
   );
 
-  const noNotes = !archivedNotes.length && !activeNotes.length;
+  const noNotes = !filteredActiveNotes.length && !filteredArchivedNotes.length;
 
   return (
     <main>
@@ -54,7 +59,7 @@ const LabelNotes = () => {
       {activeNotes.length > 0 && (
         <section>
           <Grid>
-            {activeNotes
+            {filteredActiveNotes
               .sort((a, b) => a.index - b.index)
               .map((e) => (
                 <GridItem key={e.id} currentItem={e} />
@@ -62,7 +67,7 @@ const LabelNotes = () => {
           </Grid>
         </section>
       )}
-      {archivedNotes.length > 0 && (
+      {filteredArchivedNotes.length > 0 && (
         <section className={classes.archive}>
           <Typography className={classes.label}>Archive</Typography>
           <Grid>

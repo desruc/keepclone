@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import cloneDeep from 'lodash.clonedeep';
 
 import NoteInput from '../components/NoteInput';
+import NoNotes from '../components/NoNotes';
 import Grid from '../components/Grid';
 import DraggableGridItem from '../components/DraggableGridItem';
 import NoteToolbar from '../components/NoteToolbar/NoteToolbar';
@@ -38,9 +39,14 @@ const Notes = () => {
     [notes]
   );
 
+  const noNotes = !notes.length;
+
   return (
     <main>
       <NoteInput />
+      {noNotes && (
+        <NoNotes icon="notes" message="There's nothing here yet..." />
+      )}
       <Grid>
         {notes
           .sort((a, b) => a.index - b.index)

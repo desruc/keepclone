@@ -68,7 +68,9 @@ const LabelNotes = () => {
 
   return (
     <main>
-      {noNotes && <NoNotes />}
+      {noNotes && (
+        <NoNotes icon="label" message="No notes with this label yet" />
+      )}
       {activeNotes.length > 0 && (
         <section>
           <Grid>

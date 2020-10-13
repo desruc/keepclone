@@ -16,7 +16,7 @@ const Trash = () => {
 
   return (
     <main>
-      {noNotes && <NoNotes />}
+      {noNotes && <NoNotes icon="trash" message="No notes in Trash" />}
       {trashedNotes.length > 0 && (
         <section>
           <Grid>

@@ -16,7 +16,9 @@ const Archive = () => {
 
   return (
     <main>
-      {noNotes && <NoNotes />}
+      {noNotes && (
+        <NoNotes icon="notes" message="Nothing has been archived yet..." />
+      )}
       {archivedNotes.length > 0 && (
         <section>
           <Grid>

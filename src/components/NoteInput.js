@@ -40,7 +40,8 @@ const NoteInput = () => {
   const getEmptyTextNote = (index) => ({
     id: randomId(),
     index,
-    text: ''
+    text: '',
+    labels: []
   });
 
   // Local state
@@ -97,6 +98,7 @@ const NoteInput = () => {
         value={text}
         onFocus={onFocus}
         onChange={onTextChange}
+        multiline
       />
       {focused && (
         <Box display="flex" justifyContent="flex-end">

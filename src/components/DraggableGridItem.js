@@ -14,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(1),
     '&:hover': {
+      boxShadow: theme.shadows[3],
+      transition: theme.transitions.create(['box-shadow'], {
+        easing: theme.transitions.easing.easeInOut,
+        duration: theme.transitions.duration.shorter
+      }),
       '& .note-toolbar': {
         opacity: 1
       }
@@ -28,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
     height: '100%'
   },
   content: {
-    flex: 1
+    flex: 1,
+    whiteSpace: 'pre-line'
   }
 }));
 

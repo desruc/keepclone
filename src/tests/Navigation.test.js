@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { renderWithMuiTheme } from './testUtils';
+import { renderWithMuiThemeAndRedux } from './testUtils';
 
 import Navigation from '../components/Navigation';
 
@@ -23,24 +23,24 @@ describe('<Navigation /> tests', () => {
   });
 
   test('renders the toggle menu button', () => {
-    const { getByLabelText } = renderWithMuiTheme(
-      <Navigation colorMode="light" />
+    const { getByLabelText } = renderWithMuiThemeAndRedux(
+      <Navigation colorMode="light" openLabelManager={jest.fn()} />
     );
 
     expect(getByLabelText(/open menu/i)).toBeInTheDocument();
   });
 
   test('renders the theme swtich', () => {
-    const { getByLabelText } = renderWithMuiTheme(
-      <Navigation colorMode="light" />
+    const { getByLabelText } = renderWithMuiThemeAndRedux(
+      <Navigation colorMode="light" openLabelManager={jest.fn()} />
     );
 
     expect(getByLabelText(/theme switch/i)).toBeInTheDocument();
   });
 
   test('clicking the theme switch dispatchs an action', () => {
-    const { getByLabelText } = renderWithMuiTheme(
-      <Navigation colorMode="light" />
+    const { getByLabelText } = renderWithMuiThemeAndRedux(
+      <Navigation colorMode="light" openLabelManager={jest.fn()} />
     );
 
     fireEvent.click(getByLabelText(/theme switch/i));

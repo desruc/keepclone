@@ -32,3 +32,22 @@ export function renderWithMuiTheme(
 
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }
+
+export function renderWithMuiThemeAndRedux(
+  ui,
+  { theme = 'light', ...renderOptions } = {}
+) {
+  const isLightMode = theme === 'light';
+  // eslint-disable-next-line
+  function Wrapper({ children }) {
+    return (
+      <Provider store={store}>
+        <ThemeProvider theme={isLightMode ? lightTheme : darkTheme}>
+          {children}
+        </ThemeProvider>
+      </Provider>
+    );
+  }
+
+  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+}

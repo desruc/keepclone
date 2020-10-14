@@ -8,17 +8,17 @@ export const loginWithEmail = async (email, password) => {
       .signInWithEmailAndPassword(email, password);
     return user;
   } catch (error) {
-    // TODO: handle error
-    console.log('loginUser -> error', error);
+    // TODO: map error codes
+    return error;
   }
 };
 
 export const logout = async () => {
   try {
-    await firebase.auth().signOut();
+    return await firebase.auth().signOut();
   } catch (error) {
-    // TODO: handle error
-    console.log('logout -> error', error);
+    // TODO: map error codes
+    return error;
   }
 };
 
@@ -30,8 +30,8 @@ export const loginWithGoogle = async () => {
   try {
     return await firebase.auth().signInWithPopup(provider);
   } catch (error) {
-    // TODO: handle error
-    console.log('signInWithGoogle -> error', error);
+    // TODO: map error codes
+    return error;
   }
 };
 

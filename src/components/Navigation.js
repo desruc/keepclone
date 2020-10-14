@@ -17,6 +17,7 @@ import List from '@material-ui/core/List';
 
 import MenuIcon from '@material-ui/icons/Menu';
 
+import UserAuth from './UserAuth';
 import DrawerItem from './DrawerItem';
 
 import { selectLabels, selectSelectedLabel } from '../redux/reducer';
@@ -211,9 +212,11 @@ const Navigation = ({ colorMode, openLabelManager }) => {
             </Typography>
           </Box>
           <Box>
+            <UserAuth />
             <Switch
               checked={!lightMode}
               onChange={toggleColorMode}
+              title="Theme switch"
               name="themeSwitch"
               inputProps={{ 'aria-label': 'theme switch' }}
               size="small"

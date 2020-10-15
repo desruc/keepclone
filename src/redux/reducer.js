@@ -26,7 +26,9 @@ const appReducer = (state = initialState, action) => {
     case types.LOGOUT_SUCCESS:
       return {
         ...state,
-        user: null
+        user: null,
+        notes: [],
+        labels: []
       };
 
     case types.CHANGE_COLOR_MODE:
@@ -120,6 +122,12 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedLabel: action.label
+      };
+
+    case types.UPDATE_FIREBASE_NOTES:
+      return {
+        ...state,
+        notes: action.notes
       };
 
     default:

@@ -8,7 +8,8 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
 import { SAVE_LOCAL_NOTE } from '../redux/types';
-import { selectActiveNotes } from '../redux/reducer';
+import { attemptAddNote } from '../redux/actions';
+import { selectActiveNotes, selectUser } from '../redux/reducer';
 
 import { useOnClickOutside } from '../utils/hooks';
 
@@ -34,6 +35,7 @@ const NoteInput = () => {
   const containerRef = useRef(null);
 
   // Redux
+  const authUser = useSelector((state) => selectUser(state));
   const notes = useSelector((state) => selectActiveNotes(state));
 
   // Helpers
@@ -66,11 +68,21 @@ const NoteInput = () => {
     });
   };
 
-  const saveNote = () => {
+  const saveLocalNote = () =>
     dispatch({
       type: SAVE_LOCAL_NOTE,
       note
     });
+
+  const saveFirebaseNote = () => {
+    // Allow firebase to set its own id
+    const { id, ...rest } = note;
+    dispatch(attemptAddNote(authUser, { ...rest }));
+  };
+
+  const saveNote = () => {
+    if (authUser) saveFirebaseNote();
+    else saveLocalNote();
 
     setNote(getEmptyTextNote(notes.length + 1));
   };

@@ -8,14 +8,17 @@ import Grid from '../components/Grid';
 import DraggableGridItem from '../components/DraggableGridItem';
 import NoteToolbar from '../components/NoteToolbar/NoteToolbar';
 
+import { reorderFbNotes } from '../firebase/fbDb';
+
 import { REORDER_LOCAL_NOTES } from '../redux/types';
-import { selectActiveNotes } from '../redux/reducer';
+import { selectActiveNotes, selectUser } from '../redux/reducer';
 
 const Notes = () => {
   // Hooks
   const dispatch = useDispatch();
 
   // Redux
+  const authUser = useSelector((state) => selectUser(state));
   const notes = useSelector((state) => selectActiveNotes(state));
 
   // Event handlers
@@ -34,9 +37,11 @@ const Notes = () => {
       const firstIndex = firstItem.index;
       firstItem.index = secondItem.index;
       secondItem.index = firstIndex;
-      reorderLocalItems(newNotes);
+
+      if (authUser) reorderFbNotes(firstItem, secondItem, authUser);
+      else reorderLocalItems(newNotes);
     },
-    [notes]
+    [notes, authUser]
   );
 
   const noNotes = !notes.length;

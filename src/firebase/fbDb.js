@@ -37,3 +37,22 @@ export const addNote = async (userId, note) =>
 
 export const addLabel = async (userId, label) =>
   db.collection('users').doc(userId).collection('labels').add(label);
+
+export const reorderFbNotes = (firstItem, secondItem, userId) => {
+  const batch = db.batch();
+  const firstRef = db
+    .collection('users')
+    .doc(userId)
+    .collection('notes')
+    .doc(firstItem.id);
+
+  const secondRef = db
+    .collection('users')
+    .doc(userId)
+    .collection('notes')
+    .doc(secondItem.id);
+
+  batch.update(firstRef, 'index', firstItem.index);
+  batch.update(secondRef, 'index', secondItem.index);
+  batch.commit();
+};

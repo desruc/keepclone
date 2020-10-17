@@ -16,7 +16,7 @@ export const streamNotes = (userId, observer) =>
 export const streamLabels = (userId, observer) =>
   streamData(userId, 'labels', observer);
 
-export const saveLabel = (userId, labelDocId, label) =>
+export const updateLabel = (userId, labelDocId, label) =>
   db
     .collection('users')
     .doc(userId)
@@ -24,7 +24,7 @@ export const saveLabel = (userId, labelDocId, label) =>
     .doc(labelDocId)
     .update(label);
 
-export const saveNote = (userId, noteDocId, note) =>
+export const updateNote = (userId, noteDocId, note) =>
   db
     .collection('users')
     .doc(userId)
@@ -56,3 +56,6 @@ export const reorderFbNotes = (firstItem, secondItem, userId) => {
   batch.update(secondRef, 'index', secondItem.index);
   batch.commit();
 };
+
+export const deleteNote = async (userId, noteId) =>
+  db.collection('users').doc(userId).collection('notes').doc(noteId).delete();

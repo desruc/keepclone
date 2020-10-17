@@ -43,7 +43,9 @@ const NoteInput = () => {
     id: randomId(),
     index,
     text: '',
-    labels: []
+    labels: [],
+    archived: false,
+    trashed: false
   });
 
   // Local state

@@ -30,7 +30,7 @@ const Archive = () => {
                   currentItem={e}
                   footerComponent={
                     <NoteToolbar
-                      noteId={e.id}
+                      note={e}
                       unarchiveItem
                       deleteItem
                       changeLabels

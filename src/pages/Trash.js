@@ -27,7 +27,7 @@ const Trash = () => {
                   key={e.id}
                   currentItem={e}
                   footerComponent={
-                    <NoteToolbar noteId={e.id} restoreItem deleteForever />
+                    <NoteToolbar note={e} restoreItem deleteForever />
                   }
                 />
               ))}

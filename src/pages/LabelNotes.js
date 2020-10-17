@@ -82,7 +82,7 @@ const LabelNotes = () => {
                   currentItem={e}
                   footerComponent={
                     <NoteToolbar
-                      noteId={e.id}
+                      note={e}
                       archiveItem
                       deleteItem
                       changeLabels

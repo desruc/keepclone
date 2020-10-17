@@ -62,7 +62,7 @@ const Notes = () => {
               onDrop={reorderItems}
               footerComponent={
                 <NoteToolbar
-                  noteId={e.id}
+                  note={e}
                   changeLabels
                   changeColour
                   archiveItem

@@ -60,7 +60,7 @@ export const reorderFbNotes = (firstItem, secondItem, userId) => {
 export const deleteFbNote = async (userId, noteId) =>
   db.collection('users').doc(userId).collection('notes').doc(noteId).delete();
 
-export const bulkUpdateFbLabels = (userId, labels) => {
+export const bulkUpdateFbLabels = async (userId, labels) => {
   const batch = db.batch();
 
   labels.forEach((l) => {
@@ -72,5 +72,36 @@ export const bulkUpdateFbLabels = (userId, labels) => {
     batch.update(ref, 'label', l.label);
   });
 
-  batch.commit();
+  await batch.commit();
+};
+
+export const deleteFbLabel = async (userId, label, notes) => {
+  const { id, label: labelText } = label;
+
+  const batch = db.batch();
+  const labelRef = db
+    .collection('users')
+    .doc(userId)
+    .collection('labels')
+    .doc(id);
+
+  batch.delete(labelRef);
+
+  notes.forEach((note) => {
+    if (note.labels.some((l) => l === labelText)) {
+      const ref = db
+        .collection('users')
+        .doc(userId)
+        .collection('labels')
+        .doc(note.id);
+
+      batch.update(
+        ref,
+        'labels',
+        note.labels.filter((l) => l !== labelText)
+      );
+    }
+  });
+
+  await batch.commit();
 };

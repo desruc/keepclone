@@ -71,7 +71,7 @@ const ExistingLabelInput = ({ labelId, label, onDelete, onChange, onSave }) => {
       <IconButton
         size="small"
         className={classes.iconButton}
-        onClick={() => onDelete(labelId)}
+        onClick={() => onDelete({ id: labelId, label })}
       >
         {hover ? <DeleteIcon /> : <LabelOutlinedIcon />}
       </IconButton>

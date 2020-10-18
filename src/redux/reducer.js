@@ -83,7 +83,11 @@ const appReducer = (state = initialState, action) => {
     case types.DELETE_LOCAL_LABEL:
       return {
         ...state,
-        labels: state.labels.filter((l) => l.id !== action.labelId)
+        labels: state.labels.filter((l) => l.id !== action.label.id),
+        notes: state.notes.map((n) => ({
+          ...n,
+          labels: n.labels.filter((l) => l !== action.label.label)
+        }))
       };
 
     case types.ARCHIVE_LOCAL_NOTE:
@@ -180,6 +184,7 @@ export default appReducer;
 
 export const selectUser = (state) => state.app.user;
 export const selectColorMode = (state) => state.app.colorMode;
+export const selectAllNotes = (state) => state.app.notes;
 export const selectActiveNotes = (state) =>
   state.app.notes.filter(({ archived, trashed }) => !archived && !trashed);
 export const selectArchivedNotes = (state) =>

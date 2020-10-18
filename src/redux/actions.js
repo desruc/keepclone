@@ -5,7 +5,8 @@ import {
   updateFbLabel,
   bulkUpdateFbLabels,
   updateFbNote,
-  deleteFbNote
+  deleteFbNote,
+  deleteFbLabel
 } from '../firebase/fbDb';
 
 export const attemptAddNote = (userId, note) => async (dispatch) => {
@@ -158,5 +159,16 @@ export const attemptPermenatlyDeleteNote = (userId, note) => async (
     });
   } catch (error) {
     console.log('attemptPermenatlyDeleteNote -> error', error);
+  }
+};
+
+export const attemptDeleteLabel = (userId, label, notes) => async (
+  dispatch
+) => {
+  try {
+    if (userId) await deleteFbLabel(userId, label, notes);
+    else dispatch({ type: types.DELETE_LOCAL_LABEL, label });
+  } catch (error) {
+    console.log('attemptDeleteLabel -> error', error);
   }
 };

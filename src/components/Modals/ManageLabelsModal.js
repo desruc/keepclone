@@ -13,16 +13,15 @@ import NewLabelInput from './NewLabelInput';
 import ExistingLabelInput from './ExistingLabelInput';
 import ConfirmationModal from './ConfirmationModal';
 
-import { selectUser, selectLabels } from '../../redux/reducer';
-
-import { DELETE_LOCAL_LABEL } from '../../redux/types';
+import { selectUser, selectLabels, selectAllNotes } from '../../redux/reducer';
 
 import { randomId } from '../../utils/helpers';
 
 import {
   attemptAddLabel,
   attemptBulkUpdateLabel,
-  attemptUpdateLabel
+  attemptUpdateLabel,
+  attemptDeleteLabel
 } from '../../redux/actions';
 
 const useStyles = makeStyles((theme) => ({
@@ -66,6 +65,7 @@ const ManageLabelsModal = ({ open, closeModal }) => {
   // Redux
   const authUser = useSelector((state) => selectUser(state));
   const labels = useSelector((state) => selectLabels(state));
+  const notes = useSelector((state) => selectAllNotes(state));
 
   // New label state
   const [newLabelState, setNewLabelState] = useState({
@@ -90,8 +90,8 @@ const ManageLabelsModal = ({ open, closeModal }) => {
   }, [labels]);
 
   // Event handlers
-  const onDeleteLabel = (id) => {
-    setSelectedLabel(id);
+  const onDeleteLabel = (label) => {
+    setSelectedLabel(label);
     setConfirmationOpen(true);
   };
 
@@ -101,10 +101,7 @@ const ManageLabelsModal = ({ open, closeModal }) => {
   };
 
   const confirmDeleteLabel = () => {
-    dispatch({
-      type: DELETE_LOCAL_LABEL,
-      labelId: selectedLabel
-    });
+    dispatch(attemptDeleteLabel(authUser, selectedLabel, notes));
     closeConfirmationModal();
   };
 

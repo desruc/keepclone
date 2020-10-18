@@ -13,16 +13,17 @@ import NewLabelInput from './NewLabelInput';
 import ExistingLabelInput from './ExistingLabelInput';
 import ConfirmationModal from './ConfirmationModal';
 
-import { selectLabels } from '../../redux/reducer';
+import { selectUser, selectLabels } from '../../redux/reducer';
 
-import {
-  SAVE_LOCAL_LABEL,
-  UPDATE_LOCAL_LABEL,
-  BULK_UPDATE_LOCAL_LABELS,
-  DELETE_LOCAL_LABEL
-} from '../../redux/types';
+import { DELETE_LOCAL_LABEL } from '../../redux/types';
 
 import { randomId } from '../../utils/helpers';
+
+import {
+  attemptAddLabel,
+  attemptBulkUpdateLabel,
+  attemptUpdateLabel
+} from '../../redux/actions';
 
 const useStyles = makeStyles((theme) => ({
   listWrap: {
@@ -63,6 +64,7 @@ const ManageLabelsModal = ({ open, closeModal }) => {
   const dispatch = useDispatch();
 
   // Redux
+  const authUser = useSelector((state) => selectUser(state));
   const labels = useSelector((state) => selectLabels(state));
 
   // New label state
@@ -129,10 +131,7 @@ const ManageLabelsModal = ({ open, closeModal }) => {
     const emptyLabel = !label.trim().length;
 
     if (!labelExists && !emptyLabel)
-      dispatch({
-        type: SAVE_LOCAL_LABEL,
-        label: newLabelState
-      });
+      dispatch(attemptAddLabel(authUser, newLabelState));
 
     // Clear input
     setNewLabelState({
@@ -154,10 +153,7 @@ const ManageLabelsModal = ({ open, closeModal }) => {
 
   const saveExistingLabel = (id) => {
     const label = existingLabels.find((e) => e.id === id);
-    dispatch({
-      type: UPDATE_LOCAL_LABEL,
-      label
-    });
+    dispatch(attemptUpdateLabel(authUser, label));
   };
 
   const saveAllChanges = () => {
@@ -172,21 +168,19 @@ const ManageLabelsModal = ({ open, closeModal }) => {
     const { label } = newLabelState;
     const labelExists = labels.some((l) => l === label);
     const emptyLabel = !label.trim().length;
-    const hasNewLabel = !labelExists && !emptyLabel;
 
     // Check if new label needs to be added to update state (firebase approach)
     if (!labelExists && !emptyLabel) {
-      labelChanges.push(newLabelState);
+      dispatch(attemptAddLabel(newLabelState));
       setNewLabelState({
         id: randomId(),
         label: ''
       });
     }
 
-    dispatch({
-      type: BULK_UPDATE_LOCAL_LABELS,
-      labels: hasNewLabel ? [...existingLabels, newLabelState] : existingLabels
-    });
+    if (labelChanges.length > 0) {
+      dispatch(attemptBulkUpdateLabel(authUser, labelChanges));
+    }
   };
 
   const handleClose = () => {

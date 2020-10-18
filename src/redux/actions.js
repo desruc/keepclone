@@ -2,6 +2,8 @@ import * as types from './types';
 import {
   addFbNote,
   addFbLabel,
+  updateFbLabel,
+  bulkUpdateFbLabels,
   updateFbNote,
   deleteFbNote
 } from '../firebase/fbDb';
@@ -17,13 +19,38 @@ export const attemptAddNote = (userId, note) => async (dispatch) => {
   }
 };
 
-export const attemptAddLabel = (userId, note) => async (dispatch) => {
+export const attemptAddLabel = (userId, label) => async (dispatch) => {
   try {
     // TODO: Saving states
-    await addFbLabel(userId, note);
+    const { id, ...rest } = label;
+    if (userId) await addFbLabel(userId, rest);
+    else dispatch({ type: types.SAVE_LOCAL_LABEL, label });
   } catch (error) {
     console.log('attemptSaveLabel -> error', error);
     // TODO: Saving states - toast notification
+  }
+};
+
+export const attemptUpdateLabel = (userId, label) => async (dispatch) => {
+  try {
+    const { id, ...rest } = label;
+    if (userId) await updateFbLabel(userId, id, rest);
+    else
+      dispatch({
+        type: types.UPDATE_LOCAL_LABEL,
+        label
+      });
+  } catch (error) {
+    console.log('attemptUpdateLabel -> error', error);
+  }
+};
+
+export const attemptBulkUpdateLabel = (userId, labels) => async (dispatch) => {
+  try {
+    if (userId) await bulkUpdateFbLabels(userId, labels);
+    else dispatch({ type: types.BULK_UPDATE_LOCAL_LABELS, labels });
+  } catch (error) {
+    console.log('attemptBulkUpdateLabel -> error', error);
   }
 };
 

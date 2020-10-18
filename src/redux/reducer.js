@@ -73,7 +73,11 @@ const appReducer = (state = initialState, action) => {
     case types.BULK_UPDATE_LOCAL_LABELS:
       return {
         ...state,
-        labels: action.labels
+        labels: state.labels.map((l) => {
+          const change = action.labels.find((c) => c.id === l.id);
+          if (change) return change;
+          return l;
+        })
       };
 
     case types.DELETE_LOCAL_LABEL:
@@ -134,6 +138,12 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         notes: action.notes
+      };
+
+    case types.UPDATE_FIREBASE_LABELS:
+      return {
+        ...state,
+        labels: action.labels
       };
 
     case types.SET_TOAST_PROPS:

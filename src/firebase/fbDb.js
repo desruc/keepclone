@@ -59,3 +59,18 @@ export const reorderFbNotes = (firstItem, secondItem, userId) => {
 
 export const deleteFbNote = async (userId, noteId) =>
   db.collection('users').doc(userId).collection('notes').doc(noteId).delete();
+
+export const bulkUpdateFbLabels = (userId, labels) => {
+  const batch = db.batch();
+
+  labels.forEach((l) => {
+    const ref = db
+      .collection('users')
+      .doc(userId)
+      .collection('labels')
+      .doc(l.id);
+    batch.update(ref, 'label', l.label);
+  });
+
+  batch.commit();
+};

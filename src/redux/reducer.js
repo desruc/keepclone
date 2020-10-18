@@ -6,7 +6,13 @@ const initialState = {
   colorMode: 'light',
   notes: [],
   labels: [],
-  selectedLabel: null
+  selectedLabel: null,
+  selectedNote: null,
+  toastProps: {
+    open: false,
+    message: '',
+    actionType: ''
+  }
 };
 
 const appReducer = (state = initialState, action) => {
@@ -130,6 +136,31 @@ const appReducer = (state = initialState, action) => {
         notes: action.notes
       };
 
+    case types.SET_TOAST_PROPS:
+      return {
+        ...state,
+        toastProps: {
+          open: action.open,
+          message: action.message,
+          actionType: action.actionType
+        }
+      };
+
+    case types.CLOSE_TOAST:
+      return {
+        ...state,
+        toastProps: {
+          ...state.toastProps,
+          open: false
+        }
+      };
+
+    case types.SET_SELECTED_NOTE:
+      return {
+        ...state,
+        selectedNote: action.note
+      };
+
     default:
       return state;
   }
@@ -147,3 +178,5 @@ export const selectTrashedNotes = (state) =>
   state.app.notes.filter(({ trashed }) => trashed);
 export const selectLabels = (state) => state.app.labels;
 export const selectSelectedLabel = (state) => state.app.selectedLabel;
+export const selectSelectedNote = (state) => state.app.selectedNote;
+export const selectToastProps = (state) => state.app.toastProps;

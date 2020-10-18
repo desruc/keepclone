@@ -13,6 +13,7 @@ import Container from '@material-ui/core/Container';
 
 import Navigation from './Navigation';
 import ManageLabelsModal from './Modals/ManageLabelsModal';
+import ToastNotification from './ToastNotification';
 import Notes from '../pages/Notes';
 import LabelNotes from '../pages/LabelNotes';
 import Archive from '../pages/Archive';
@@ -66,6 +67,7 @@ const AppShell = () => {
           </Container>
         </Box>
         <ManageLabelsModal open={showLabelModal} closeModal={closeLabelModal} />
+        <ToastNotification />
       </ThemeProvider>
     </DndProvider>
   );

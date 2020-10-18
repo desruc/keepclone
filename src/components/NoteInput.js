@@ -7,7 +7,6 @@ import InputBase from '@material-ui/core/InputBase';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
-import { SAVE_LOCAL_NOTE } from '../redux/types';
 import { attemptAddNote } from '../redux/actions';
 import { selectActiveNotes, selectUser } from '../redux/reducer';
 
@@ -70,22 +69,8 @@ const NoteInput = () => {
     });
   };
 
-  const saveLocalNote = () =>
-    dispatch({
-      type: SAVE_LOCAL_NOTE,
-      note
-    });
-
-  const saveFirebaseNote = () => {
-    // Allow firebase to set its own id
-    const { id, ...rest } = note;
-    dispatch(attemptAddNote(authUser, { ...rest }));
-  };
-
   const saveNote = () => {
-    if (authUser) saveFirebaseNote();
-    else saveLocalNote();
-
+    dispatch(attemptAddNote(authUser, note));
     setNote(getEmptyTextNote(notes.length + 1));
   };
 

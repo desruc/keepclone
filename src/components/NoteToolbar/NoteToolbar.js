@@ -16,16 +16,14 @@ import {
 } from './NoteToolbarButtons';
 
 import {
-  archiveFirebaseNote,
-  unarchiveFirebaseNote,
-  deleteFirebaseNote,
-  restoreFirebaseNote,
-  permanentlyDeleteFirebaseNote
+  attemptArchiveNote,
+  attemptUnarchiveNote,
+  attemptDeleteNote,
+  attemptRestoreNote,
+  attemptPermenatlyDeleteNote
 } from '../../redux/actions';
 
 import { selectUser } from '../../redux/reducer';
-
-import * as types from '../../redux/types';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -57,43 +55,17 @@ const NoteToolbar = ({
 
   const authUser = useSelector((state) => selectUser(state));
 
-  const { id: noteId } = note;
-
-  const updateLocalNote = (type, label = '', bg = '') => {
-    dispatch({
-      type,
-      noteId,
-      label,
-      bg
-    });
-  };
-
   // Event handlers
-  const onArchiveNote = () => {
-    if (authUser) dispatch(archiveFirebaseNote(authUser, note));
-    else updateLocalNote(types.ARCHIVE_LOCAL_NOTE);
-  };
+  const onArchiveNote = () => dispatch(attemptArchiveNote(authUser, note));
 
-  const onUnarchiveNote = () => {
-    console.log('test');
-    if (authUser) dispatch(unarchiveFirebaseNote(authUser, note));
-    else updateLocalNote(types.UNARCHIVE_LOCAL_NOTE);
-  };
+  const onUnarchiveNote = () => dispatch(attemptUnarchiveNote(authUser, note));
 
-  const onDeleteNote = () => {
-    if (authUser) dispatch(deleteFirebaseNote(authUser, note));
-    else updateLocalNote(types.DELETE_LOCAL_NOTE);
-  };
+  const onDeleteNote = () => dispatch(attemptDeleteNote(authUser, note));
 
-  const onRestoreNote = () => {
-    if (authUser) dispatch(restoreFirebaseNote(authUser, note));
-    else updateLocalNote(types.RESTORE_LOCAL_NOTE);
-  };
+  const onRestoreNote = () => dispatch(attemptRestoreNote(authUser, note));
 
-  const onPermanetlyDeleteNote = () => {
-    if (authUser) dispatch(permanentlyDeleteFirebaseNote(authUser, note));
-    else updateLocalNote(types.PERMANETLY_DELETE_LOCAL_NOTE);
-  };
+  const onPermanetlyDeleteNote = () =>
+    dispatch(attemptPermenatlyDeleteNote(authUser, note));
 
   const onChangeLabel = () => {
     // TODO

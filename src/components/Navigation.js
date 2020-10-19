@@ -109,7 +109,7 @@ const Navigation = ({ colorMode, openLabelManager }) => {
 
   // Redux
   const labels = useSelector((state) => selectLabels(state));
-  const selectedLabel = useSelector((state) => selectSelectedLabel(state));
+  const { label: selectedLabel } = useSelector((state) => selectSelectedLabel(state));
 
   // Event handlers
   const toggleDrawer = () => {

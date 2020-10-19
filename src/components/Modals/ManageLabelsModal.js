@@ -168,7 +168,7 @@ const ManageLabelsModal = ({ open, closeModal }) => {
 
     // Check if new label needs to be added to update state (firebase approach)
     if (!labelExists && !emptyLabel) {
-      dispatch(attemptAddLabel(newLabelState));
+      dispatch(attemptAddLabel(authUser, newLabelState));
       setNewLabelState({
         id: randomId(),
         label: ''

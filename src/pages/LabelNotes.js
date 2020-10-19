@@ -5,6 +5,7 @@ import { useParams, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
+import NoteInput from '../components/NoteInput';
 import NoNotes from '../components/NoNotes';
 import Grid from '../components/Grid';
 import GridItem from '../components/GridItem';
@@ -68,6 +69,7 @@ const LabelNotes = () => {
 
   return (
     <main>
+      <NoteInput label={labelParam} />
       {noNotes && (
         <NoNotes icon="label" message="No notes with this label yet" />
       )}

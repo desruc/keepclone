@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import NoteLabels from './NoteLabels';
+
 const useStyles = makeStyles((theme) => ({
   gridItem: {
     border: `1px solid ${theme.palette.divider}`,
@@ -22,8 +24,15 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     height: '100%'
   },
+  title: {
+    fontSize: '1rem',
+    fontWeight: 600,
+    marginBottom: theme.spacing(0.75)
+  },
   content: {
-    flex: 1
+    fontSize: '0.825rem',
+    flex: 1,
+    whiteSpace: 'pre-line'
   }
 }));
 
@@ -31,10 +40,14 @@ const GridItem = ({ currentItem, footerComponent }) => {
   // Hooks
   const classes = useStyles();
 
+  const { title, text, labels } = currentItem;
+
   return (
     <div className={classes.gridItem}>
       <div className={classes.inner}>
-        <div className={classes.content}>{currentItem.text}</div>
+        {title && <div className={classes.title}>{title}</div>}
+        <div className={classes.content}>{text}</div>
+        <NoteLabels labels={labels} />
         {footerComponent}
       </div>
     </div>
@@ -45,7 +58,9 @@ GridItem.propTypes = {
   currentItem: PropTypes.shape({
     id: PropTypes.string,
     index: PropTypes.number,
-    text: PropTypes.string
+    title: PropTypes.string,
+    text: PropTypes.string,
+    labels: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   footerComponent: PropTypes.node
 };

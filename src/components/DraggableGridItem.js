@@ -5,6 +5,8 @@ import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import NoteLabels from './NoteLabels';
+
 import dndTypes from '../constants/dndTypes';
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +34,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     height: '100%'
   },
+  title: {
+    fontSize: '1rem',
+    fontWeight: 600,
+    marginBottom: theme.spacing(0.75)
+  },
   content: {
+    fontSize: '0.825rem',
     flex: 1,
     whiteSpace: 'pre-line'
   }
@@ -113,10 +121,14 @@ const DraggableGridItem = ({ currentItem, onDrop, footerComponent }) => {
     [classes.dragging]: isDragging
   });
 
+  const { title, text, labels } = currentItem;
+
   return (
     <div ref={ref} className={gridItemClass} style={{ opacity }}>
       <div className={classes.inner}>
-        <div className={classes.content}>{currentItem.text}</div>
+        {title && <div className={classes.title}>{title}</div>}
+        <div className={classes.content}>{text}</div>
+        <NoteLabels redirect labels={labels} />
         {footerComponent}
       </div>
     </div>
@@ -127,7 +139,9 @@ DraggableGridItem.propTypes = {
   currentItem: PropTypes.shape({
     id: PropTypes.string,
     index: PropTypes.number,
-    text: PropTypes.string
+    title: PropTypes.string,
+    text: PropTypes.string,
+    labels: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   onDrop: PropTypes.func.isRequired,
   footerComponent: PropTypes.node

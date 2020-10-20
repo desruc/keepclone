@@ -185,6 +185,15 @@ const appReducer = (state = initialState, action) => {
         })
       };
 
+    case types.TOGGLE_LOCAL_NOTE_LABEL:
+      return {
+        ...state,
+        notes: state.notes.map((n) => {
+          if (n.id === action.note.id) return action.note;
+          return n;
+        })
+      };
+
     default:
       return state;
   }

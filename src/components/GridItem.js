@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 import NoteLabels from './NoteLabels';
+
+import { attemptToggleLabel } from '../redux/actions';
+import { selectUser } from '../redux/reducer';
 
 const useStyles = makeStyles((theme) => ({
   gridItem: {
@@ -39,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
 const GridItem = ({ currentItem, footerComponent }) => {
   // Hooks
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const authUser = useSelector((state) => selectUser(state));
+  const handleRemoveLabel = (label) =>
+    dispatch(attemptToggleLabel(authUser, currentItem, label));
 
   const { title, text, labels } = currentItem;
 
@@ -47,7 +56,7 @@ const GridItem = ({ currentItem, footerComponent }) => {
       <div className={classes.inner}>
         {title && <div className={classes.title}>{title}</div>}
         <div className={classes.content}>{text}</div>
-        <NoteLabels labels={labels} />
+        <NoteLabels clickable labels={labels} onRemove={handleRemoveLabel} />
         {footerComponent}
       </div>
     </div>

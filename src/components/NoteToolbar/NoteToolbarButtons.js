@@ -6,7 +6,6 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 import RestoreFromTrashRoundedIcon from '@material-ui/icons/RestoreFromTrashRounded';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
-import LabelOutlinedIcon from '@material-ui/icons/LabelOutlined';
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import UnarchiveOutlinedIcon from '@material-ui/icons/UnarchiveOutlined';
 
@@ -69,21 +68,6 @@ export const PermanentlyDeleteItem = ({ onClick }) => {
 };
 
 PermanentlyDeleteItem.propTypes = {
-  onClick: PropTypes.func.isRequired
-};
-
-export const ChangeLabels = ({ onClick }) => (
-  <IconButton
-    title="Change labels"
-    aria-label="change-labels"
-    size="small"
-    onClick={onClick}
-  >
-    <LabelOutlinedIcon />
-  </IconButton>
-);
-
-ChangeLabels.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 

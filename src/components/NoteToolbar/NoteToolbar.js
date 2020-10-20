@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
-  ChangeLabels,
   ArchiveNote,
   UnarchiveNote,
   DeleteItem,
@@ -15,6 +14,7 @@ import {
 } from './NoteToolbarButtons';
 
 import ChangeBackgroundButton from './ChangeBackgroundButton';
+import UpdateLabelsButton from './UpdateLabelsButton';
 
 import {
   attemptArchiveNote,
@@ -22,7 +22,8 @@ import {
   attemptDeleteNote,
   attemptRestoreNote,
   attemptPermenatlyDeleteNote,
-  attemptBackgroundChange
+  attemptBackgroundChange,
+  attemptToggleLabel
 } from '../../redux/actions';
 
 import { selectUser } from '../../redux/reducer';
@@ -69,15 +70,14 @@ const NoteToolbar = ({
   const onPermanetlyDeleteNote = () =>
     dispatch(attemptPermenatlyDeleteNote(authUser, note));
 
-  const onChangeLabel = () => {
-    // TODO
-  };
+  const onChangeLabel = (label) =>
+    dispatch(attemptToggleLabel(authUser, note, label));
 
   const onChangeBackground = (color) => {
     dispatch(attemptBackgroundChange(authUser, note, color));
   };
 
-  const { backgroundColor } = note;
+  const { backgroundColor, labels: noteLabels } = note;
 
   return (
     <div className={clsx(classes.toolbar, 'note-toolbar')}>
@@ -87,7 +87,9 @@ const NoteToolbar = ({
           currentColor={backgroundColor}
         />
       )}
-      {changeLabels && <ChangeLabels onClick={onChangeLabel} />}
+      {changeLabels && (
+        <UpdateLabelsButton noteLabels={noteLabels} onChange={onChangeLabel} />
+      )}
       {archiveItem && <ArchiveNote onClick={onArchiveNote} />}
       {unarchiveItem && <UnarchiveNote onClick={onUnarchiveNote} />}
       {deleteItem && <DeleteItem onClick={onDeleteNote} />}
@@ -102,7 +104,8 @@ const NoteToolbar = ({
 NoteToolbar.propTypes = {
   note: PropTypes.shape({
     id: PropTypes.string,
-    backgroundColor: PropTypes.string
+    backgroundColor: PropTypes.string,
+    labels: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   deleteItem: PropTypes.bool,
   restoreItem: PropTypes.bool,

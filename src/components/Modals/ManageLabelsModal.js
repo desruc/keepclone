@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import isEqual from 'lodash.isequal';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -60,6 +61,7 @@ const consolidateLabels = (prevLabels, labels) => {
 const ManageLabelsModal = ({ open, closeModal }) => {
   // Hooks
   const classes = useStyles();
+  const history = useHistory();
   const dispatch = useDispatch();
 
   // Redux
@@ -101,6 +103,7 @@ const ManageLabelsModal = ({ open, closeModal }) => {
   };
 
   const confirmDeleteLabel = () => {
+    history.push('/');
     dispatch(attemptDeleteLabel(authUser, selectedLabel, notes));
     closeConfirmationModal();
   };

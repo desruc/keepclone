@@ -191,3 +191,25 @@ export const attemptBackgroundChange = (
     console.log('error', error);
   }
 };
+
+export const attemptToggleLabel = (userId, note, label) => async (dispatch) => {
+  try {
+    const { id, ...rest } = note;
+    const hasLabel = note.labels.some((l) => l === label);
+    const updatedNote = {
+      ...rest,
+      labels: hasLabel
+        ? note.labels.filter((l) => l !== label)
+        : [...note.labels, label]
+    };
+
+    if (userId) await updateFbNote(userId, id, updatedNote);
+    else
+      dispatch({
+        type: types.TOGGLE_LOCAL_NOTE_LABEL,
+        note: { id, ...updatedNote }
+      });
+  } catch (error) {
+    console.log('attemptToggleLabel -> error', error);
+  }
+};

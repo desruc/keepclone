@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
   },
   hidden: {
     display: 'hidden'
+  },
+  chip: {
+    marginRight: theme.spacing(0.725)
   }
 }));
 
@@ -41,6 +44,7 @@ const NoteLabels = ({ clickable, onRemove, labels }) => {
             onDelete={() => onRemove(label)}
             size="small"
             variant="outlined"
+            className={classes.chip}
           />
         );
       })}

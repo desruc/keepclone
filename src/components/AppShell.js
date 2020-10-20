@@ -11,6 +11,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 
+import FullscreenLoader from './FullscreenLoader';
 import Navigation from './Navigation';
 import ManageLabelsModal from './Modals/ManageLabelsModal';
 import ToastNotification from './ToastNotification';
@@ -50,6 +51,7 @@ const AppShell = () => {
     <DndProvider backend={HTML5Backend}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <FullscreenLoader />
         <Box id="page-wrap" display="flex">
           <Navigation colorMode={colorMode} openLabelManager={openLabelModal} />
           <Container

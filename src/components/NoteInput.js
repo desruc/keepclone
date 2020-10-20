@@ -1,6 +1,7 @@
 import React, { useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -9,6 +10,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
 import NoteLabels from './NoteLabels';
+import ChangeBackgroundButton from './NoteToolbar/ChangeBackgroundButton';
 
 import { attemptAddNote } from '../redux/actions';
 import { selectActiveNotes, selectUser } from '../redux/reducer';
@@ -17,12 +19,21 @@ import { useOnClickOutside } from '../utils/hooks';
 
 import { randomId } from '../utils/helpers';
 
+import {
+  backgroundColorStyles,
+  backgroundColors
+} from '../constants/backgroundColors';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     minHeight: 46,
     width: 600,
     margin: '0px auto 16px auto',
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    transition: theme.transitions.create(['background-color'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: theme.transitions.duration.shorter
+    })
   },
   title: {
     marginBottom: theme.spacing(1)
@@ -30,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
   button: {
     textTransform: 'none',
     fontWeight: 500
-  }
+  },
+  ...backgroundColorStyles()
 }));
 
 const NoteInput = ({ label }) => {
@@ -101,11 +113,20 @@ const NoteInput = ({ label }) => {
   // Either save the note or reset it when clicking outside the input
   useOnClickOutside(containerRef, handleInputBlur);
 
+  const { key: bgKey } = backgroundColors.find(
+    (c) => c.color === note.backgroundColor
+  );
+
+  const paperClass = clsx({
+    [classes.paper]: true,
+    [classes[bgKey]]: true
+  });
+
   // Constants
   const { title, text, labels } = note;
 
   return (
-    <Paper ref={containerRef} className={classes.paper}>
+    <Paper ref={containerRef} className={paperClass}>
       {focused && (
         <InputBase
           fullWidth
@@ -129,6 +150,7 @@ const NoteInput = ({ label }) => {
         <>
           <NoteLabels labels={labels} onRemove={removeLabel} />
           <Box display="flex" justifyContent="flex-end">
+            <ChangeBackgroundButton />
             <Button onClick={handleInputBlur} className={classes.button}>
               Save
             </Button>

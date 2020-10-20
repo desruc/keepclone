@@ -172,3 +172,22 @@ export const attemptDeleteLabel = (userId, label, notes) => async (
     console.log('attemptDeleteLabel -> error', error);
   }
 };
+
+export const attemptBackgroundChange = (
+  userId,
+  note,
+  backgroundColor
+) => async (dispatch) => {
+  try {
+    const { id, ...rest } = note;
+    if (userId) await updateFbNote(userId, id, { ...rest, backgroundColor });
+    else
+      dispatch({
+        type: types.CHANGE_LOCAL_NOTE_BACKGROUND,
+        noteId: id,
+        backgroundColor
+      });
+  } catch (error) {
+    console.log('error', error);
+  }
+};

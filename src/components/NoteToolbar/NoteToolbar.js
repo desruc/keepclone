@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
-  ChangeColour,
   ChangeLabels,
   ArchiveNote,
   UnarchiveNote,
@@ -15,12 +14,15 @@ import {
   RestoreItem
 } from './NoteToolbarButtons';
 
+import ChangeBackgroundButton from './ChangeBackgroundButton';
+
 import {
   attemptArchiveNote,
   attemptUnarchiveNote,
   attemptDeleteNote,
   attemptRestoreNote,
-  attemptPermenatlyDeleteNote
+  attemptPermenatlyDeleteNote,
+  attemptBackgroundChange
 } from '../../redux/actions';
 
 import { selectUser } from '../../redux/reducer';
@@ -71,13 +73,20 @@ const NoteToolbar = ({
     // TODO
   };
 
-  const onChangeColour = () => {
-    // TODO
+  const onChangeBackground = (color) => {
+    dispatch(attemptBackgroundChange(authUser, note, color));
   };
+
+  const { backgroundColor } = note;
 
   return (
     <div className={clsx(classes.toolbar, 'note-toolbar')}>
-      {changeColour && <ChangeColour onClick={onChangeColour} />}
+      {changeColour && (
+        <ChangeBackgroundButton
+          onChange={onChangeBackground}
+          currentColor={backgroundColor}
+        />
+      )}
       {changeLabels && <ChangeLabels onClick={onChangeLabel} />}
       {archiveItem && <ArchiveNote onClick={onArchiveNote} />}
       {unarchiveItem && <UnarchiveNote onClick={onUnarchiveNote} />}
@@ -92,7 +101,8 @@ const NoteToolbar = ({
 
 NoteToolbar.propTypes = {
   note: PropTypes.shape({
-    id: PropTypes.string
+    id: PropTypes.string,
+    backgroundColor: PropTypes.string
   }).isRequired,
   deleteItem: PropTypes.bool,
   restoreItem: PropTypes.bool,

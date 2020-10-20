@@ -175,6 +175,16 @@ const appReducer = (state = initialState, action) => {
         selectedNote: action.note
       };
 
+    case types.CHANGE_LOCAL_NOTE_BACKGROUND:
+      return {
+        ...state,
+        notes: state.notes.map((n) => {
+          if (n.id === action.noteId)
+            return { ...n, backgroundColor: action.backgroundColor };
+          return n;
+        })
+      };
+
     default:
       return state;
   }

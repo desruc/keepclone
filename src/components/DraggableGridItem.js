@@ -15,12 +15,12 @@ const useStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(1),
+    transition: theme.transitions.create(['box-shadow', 'background-color'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: theme.transitions.duration.shorter
+    }),
     '&:hover': {
       boxShadow: theme.shadows[3],
-      transition: theme.transitions.create(['box-shadow'], {
-        easing: theme.transitions.easing.easeInOut,
-        duration: theme.transitions.duration.shorter
-      }),
       '& .note-toolbar': {
         opacity: 1
       }
@@ -121,10 +121,14 @@ const DraggableGridItem = ({ currentItem, onDrop, footerComponent }) => {
     [classes.dragging]: isDragging
   });
 
-  const { title, text, labels } = currentItem;
+  const { title, text, labels, backgroundColor } = currentItem;
 
   return (
-    <div ref={ref} className={gridItemClass} style={{ opacity }}>
+    <div
+      ref={ref}
+      className={gridItemClass}
+      style={{ opacity, backgroundColor }}
+    >
       <div className={classes.inner}>
         {title && <div className={classes.title}>{title}</div>}
         <div className={classes.content}>{text}</div>
@@ -141,7 +145,8 @@ DraggableGridItem.propTypes = {
     index: PropTypes.number,
     title: PropTypes.string,
     text: PropTypes.string,
-    labels: PropTypes.arrayOf(PropTypes.string)
+    labels: PropTypes.arrayOf(PropTypes.string),
+    backgroundColor: PropTypes.string
   }).isRequired,
   onDrop: PropTypes.func.isRequired,
   footerComponent: PropTypes.node

@@ -7,7 +7,6 @@ import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 import RestoreFromTrashRoundedIcon from '@material-ui/icons/RestoreFromTrashRounded';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import LabelOutlinedIcon from '@material-ui/icons/LabelOutlined';
-import BrushOutlinedIcon from '@material-ui/icons/BrushOutlined';
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import UnarchiveOutlinedIcon from '@material-ui/icons/UnarchiveOutlined';
 
@@ -85,21 +84,6 @@ export const ChangeLabels = ({ onClick }) => (
 );
 
 ChangeLabels.propTypes = {
-  onClick: PropTypes.func.isRequired
-};
-
-export const ChangeColour = ({ onClick }) => (
-  <IconButton
-    title="Change colour"
-    aria-label="change-colour"
-    size="small"
-    onClick={onClick}
-  >
-    <BrushOutlinedIcon />
-  </IconButton>
-);
-
-ChangeColour.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 

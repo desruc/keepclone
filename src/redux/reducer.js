@@ -1,6 +1,7 @@
 import * as types from './types';
 
 const initialState = {
+  initialized: false,
   authLoading: false,
   user: null,
   colorMode: 'light',
@@ -17,6 +18,12 @@ const initialState = {
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.SET_APP_INITIALIZED:
+      return {
+        ...state,
+        initialized: true
+      };
+
     case types.AUTH_LOADING_STATE:
       return {
         ...state,
@@ -207,10 +214,11 @@ export const selectAllNotes = (state) => state.app.notes;
 export const selectActiveNotes = (state) =>
   state.app.notes.filter(({ archived, trashed }) => !archived && !trashed);
 export const selectArchivedNotes = (state) =>
-  state.app.notes.filter(({ archived }) => archived);
+  state.app.notes.filter(({ archived, trashed }) => archived && !trashed);
 export const selectTrashedNotes = (state) =>
   state.app.notes.filter(({ trashed }) => trashed);
 export const selectLabels = (state) => state.app.labels;
 export const selectSelectedLabel = (state) => state.app.selectedLabel;
 export const selectSelectedNote = (state) => state.app.selectedNote;
 export const selectToastProps = (state) => state.app.toastProps;
+export const selectAppInitialized = (state) => state.app.initialized;

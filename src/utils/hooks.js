@@ -38,12 +38,16 @@ export const useMasonryLayout = (ref) => {
 };
 
 // https://usehooks.com/useOnClickOutside/
-export const useOnClickOutside = (ref, handler) => {
+export const useOnClickOutside = (ref, handler, otherRefs = []) => {
   useEffect(
     () => {
       const listener = (event) => {
-        // Do nothing if clicking ref's element or descendent Common
-        if (!ref.current || ref.current.contains(event.target)) {
+        // Do nothing if clicking ref's element or descendent
+        if (
+          !ref.current ||
+          ref.current.contains(event.target) ||
+          otherRefs.some((r) => r.current && r.current.contains(event.target))
+        ) {
           return;
         }
 

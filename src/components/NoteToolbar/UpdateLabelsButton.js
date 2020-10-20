@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const UpdateLabelsButton = ({ noteLabels, onChange }) => {
+const UpdateLabelsButton = forwardRef(({ noteLabels, onChange }, ref) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -60,6 +60,7 @@ const UpdateLabelsButton = ({ noteLabels, onChange }) => {
         <LabelOutlinedIcon />
       </IconButton>
       <Popover
+        ref={ref}
         open={isOpen}
         onClose={closeMenu}
         anchorEl={anchorEl}
@@ -95,7 +96,7 @@ const UpdateLabelsButton = ({ noteLabels, onChange }) => {
       </Popover>
     </>
   );
-};
+});
 
 UpdateLabelsButton.propTypes = {
   noteLabels: PropTypes.arrayOf(PropTypes.string).isRequired,

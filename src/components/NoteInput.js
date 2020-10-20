@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 
 import NoteLabels from './NoteLabels';
 import ChangeBackgroundButton from './NoteToolbar/ChangeBackgroundButton';
+import UpdateLabelsButton from './NoteToolbar/UpdateLabelsButton';
 
 import { attemptAddNote } from '../redux/actions';
 import { selectActiveNotes, selectUser } from '../redux/reducer';
@@ -42,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'none',
     fontWeight: 500
   },
+  toolbar: {
+    '& .MuiIconButton-root': {
+      marginRight: theme.spacing(1)
+    }
+  },
   ...backgroundColorStyles()
 }));
 
@@ -50,6 +56,8 @@ const NoteInput = ({ label }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const containerRef = useRef(null);
+  const labelPopoverRef = useRef(null);
+  const bgPopoverRef = useRef(null);
 
   // Redux
   const authUser = useSelector((state) => selectUser(state));
@@ -85,7 +93,10 @@ const NoteInput = ({ label }) => {
   const resetNote = () => {
     setNote({
       ...note,
-      text: ''
+      title: '',
+      text: '',
+      labels: [],
+      backgroundColor: 'transparent'
     });
   };
 
@@ -110,8 +121,27 @@ const NoteInput = ({ label }) => {
     });
   };
 
+  const onBackgroundChange = (color) =>
+    setNote({
+      ...note,
+      backgroundColor: color
+    });
+
+  const onLabelChange = (selectedLabel) => {
+    const exists = note.labels.some((l) => l === selectedLabel);
+    setNote({
+      ...note,
+      labels: exists
+        ? note.labels.filter((l) => l !== selectedLabel)
+        : [...note.labels, selectedLabel]
+    });
+  };
+
   // Either save the note or reset it when clicking outside the input
-  useOnClickOutside(containerRef, handleInputBlur);
+  useOnClickOutside(containerRef, handleInputBlur, [
+    bgPopoverRef,
+    labelPopoverRef
+  ]);
 
   const { key: bgKey } = backgroundColors.find(
     (c) => c.color === note.backgroundColor
@@ -123,7 +153,7 @@ const NoteInput = ({ label }) => {
   });
 
   // Constants
-  const { title, text, labels } = note;
+  const { title, text, labels, backgroundColor } = note;
 
   return (
     <Paper ref={containerRef} className={paperClass}>
@@ -149,8 +179,21 @@ const NoteInput = ({ label }) => {
       {focused && (
         <>
           <NoteLabels labels={labels} onRemove={removeLabel} />
-          <Box display="flex" justifyContent="flex-end">
-            <ChangeBackgroundButton />
+          <Box
+            display="flex"
+            justifyContent="flex-end"
+            className={classes.toolbar}
+          >
+            <UpdateLabelsButton
+              ref={labelPopoverRef}
+              noteLabels={labels}
+              onChange={onLabelChange}
+            />
+            <ChangeBackgroundButton
+              ref={bgPopoverRef}
+              onChange={onBackgroundChange}
+              currentColor={backgroundColor}
+            />
             <Button onClick={handleInputBlur} className={classes.button}>
               Save
             </Button>

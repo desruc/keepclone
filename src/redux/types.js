@@ -33,3 +33,5 @@ export const SET_SELECTED_NOTE = 'app/SET_SELECTED_NOTE';
 
 export const SET_TOAST_PROPS = 'app/SET_TOAST_PROPS';
 export const CLOSE_TOAST = 'app/CLOSE_TOAST';
+
+export const SET_APP_INITIALIZED = 'app/SET_APP_INITIALIZED';

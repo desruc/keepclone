@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import NoteInput from '../components/NoteInput';
 import NoNotes from '../components/NoNotes';
 import Grid from '../components/Grid';
 import GridItem from '../components/GridItem';
@@ -17,7 +16,6 @@ const Archive = () => {
 
   return (
     <main>
-      <NoteInput />
       {noNotes && (
         <NoNotes icon="notes" message="Nothing has been archived yet..." />
       )}

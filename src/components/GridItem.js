@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(1),
+    transition: theme.transitions.create(['box-shadow', 'background-color'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: theme.transitions.duration.shorter
+    }),
     '&:hover': {
       '& .note-toolbar': {
         opacity: 1
@@ -49,10 +53,10 @@ const GridItem = ({ currentItem, footerComponent }) => {
   const handleRemoveLabel = (label) =>
     dispatch(attemptToggleLabel(authUser, currentItem, label));
 
-  const { title, text, labels } = currentItem;
+  const { title, text, labels, backgroundColor } = currentItem;
 
   return (
-    <div className={classes.gridItem}>
+    <div className={classes.gridItem} style={{ backgroundColor }}>
       <div className={classes.inner}>
         {title && <div className={classes.title}>{title}</div>}
         <div className={classes.content}>{text}</div>
@@ -69,7 +73,8 @@ GridItem.propTypes = {
     index: PropTypes.number,
     title: PropTypes.string,
     text: PropTypes.string,
-    labels: PropTypes.arrayOf(PropTypes.string)
+    labels: PropTypes.arrayOf(PropTypes.string),
+    backgroundColor: PropTypes.string.isRequired
   }).isRequired,
   footerComponent: PropTypes.node
 };

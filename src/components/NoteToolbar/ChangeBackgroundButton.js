@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
@@ -9,7 +9,10 @@ import Popover from '@material-ui/core/Popover';
 
 import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
 
-import { backgroundColorStyles, backgroundColors } from '../../constants/backgroundColors';
+import {
+  backgroundColorStyles,
+  backgroundColors
+} from '../../constants/backgroundColors';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   ...backgroundColorStyles()
 }));
 
-const ChangeBackgroundButton = ({ onChange, currentColor }) => {
+const ChangeBackgroundButton = forwardRef(({ onChange, currentColor }, ref) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -64,6 +67,7 @@ const ChangeBackgroundButton = ({ onChange, currentColor }) => {
         <BrushOutlinedIcon />
       </IconButton>
       <Popover
+        ref={ref}
         anchorEl={anchorEl}
         open={isOpen}
         onClose={closePopover}
@@ -107,7 +111,7 @@ const ChangeBackgroundButton = ({ onChange, currentColor }) => {
       </Popover>
     </>
   );
-};
+});
 
 ChangeBackgroundButton.propTypes = {
   onChange: PropTypes.func.isRequired,

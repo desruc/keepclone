@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 // Custom hook adapted from https://medium.com/@andybarefoot/a-masonry-style-layout-using-css-grid-8c663d355ebb
-export const useMasonryLayout = (ref) => {
+export const useMasonryLayout = (ref, dep = null) => {
   const isClient = typeof window === 'object';
 
   useEffect(() => {
@@ -25,6 +25,7 @@ export const useMasonryLayout = (ref) => {
           (item.firstChild.getBoundingClientRect().height + rowGap) /
             (rowHeight + rowGap)
         );
+        item.style.display = 'flex'; // eslint-disable-line
         item.style.gridRowEnd = `span ${rowSpan}`; // eslint-disable-line
       });
     }
@@ -34,7 +35,7 @@ export const useMasonryLayout = (ref) => {
     window.addEventListener('resize', resizeGridItems);
 
     return () => window.removeEventListener('resize', resizeGridItems);
-  }, [isClient, ref]);
+  }, [isClient, ref, dep]);
 };
 
 // https://usehooks.com/useOnClickOutside/

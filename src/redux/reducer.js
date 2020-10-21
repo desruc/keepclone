@@ -1,5 +1,7 @@
 import * as types from './types';
 
+import { initialNotes, initialLabels } from '../constants/initialData';
+
 const initialState = {
   initialized: false,
   authLoading: false,
@@ -40,8 +42,8 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         user: null,
-        notes: [],
-        labels: []
+        notes: initialNotes,
+        labels: initialLabels
       };
 
     case types.CHANGE_COLOR_MODE:

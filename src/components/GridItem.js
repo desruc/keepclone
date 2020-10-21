@@ -24,13 +24,11 @@ const useStyles = makeStyles((theme) => ({
       }
     }
   },
-  dragging: {
-    opacity: 0
-  },
   inner: {
+    minHeight: '100%',
     display: 'flex',
     flexDirection: 'column',
-    height: '100%'
+    flex: 1
   },
   title: {
     fontSize: '1rem',

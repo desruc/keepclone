@@ -18,7 +18,7 @@ const Grid = ({ children }) => {
   // Hooks
   const classes = useStyles();
   const gridRef = useRef(null);
-  useMasonryLayout(gridRef);
+  useMasonryLayout(gridRef, children);
 
   return (
     <div ref={gridRef} className={classes.grid}>

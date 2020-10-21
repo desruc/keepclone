@@ -10,6 +10,7 @@ import NoteLabels from './NoteLabels';
 
 import dndTypes from '../constants/dndTypes';
 
+import { EDIT_NOTE_MODAL_OPEN_STATE, SET_SELECTED_NOTE } from '../redux/types';
 import { attemptToggleLabel } from '../redux/actions';
 import { selectUser } from '../redux/reducer';
 
@@ -57,6 +58,8 @@ const DraggableGridItem = ({ currentItem, onDrop, footerComponent }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const ref = useRef(null);
+
+  const innerRef = useRef(null);
 
   // Create drop target
   const [, drop] = useDrop({
@@ -131,6 +134,21 @@ const DraggableGridItem = ({ currentItem, onDrop, footerComponent }) => {
   const handleRemoveLabel = (label) =>
     dispatch(attemptToggleLabel(authUser, currentItem, label));
 
+  const setSelectedNote = (e) => {
+    const { target } = e;
+
+    // Only open modal if user not clicking label/background button
+    const notButton = Array.prototype.some.call(
+      innerRef.current.children,
+      (child) => child === target
+    );
+
+    if (notButton) {
+      dispatch({ type: SET_SELECTED_NOTE, note: currentItem });
+      dispatch({ type: EDIT_NOTE_MODAL_OPEN_STATE, state: true });
+    }
+  };
+
   const { title, text, labels, backgroundColor } = currentItem;
 
   return (
@@ -138,8 +156,10 @@ const DraggableGridItem = ({ currentItem, onDrop, footerComponent }) => {
       ref={ref}
       className={gridItemClass}
       style={{ opacity, backgroundColor }}
+      onClick={setSelectedNote}
+      role="presentation"
     >
-      <div className={classes.inner}>
+      <div ref={innerRef} className={classes.inner}>
         {title && <div className={classes.title}>{title}</div>}
         <div className={classes.content}>{text}</div>
         <NoteLabels clickable labels={labels} onRemove={handleRemoveLabel} />

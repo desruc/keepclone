@@ -213,3 +213,13 @@ export const attemptToggleLabel = (userId, note, label) => async (dispatch) => {
     console.log('attemptToggleLabel -> error', error);
   }
 };
+
+export const attemptUpdateNote = (userId, note) => async (dispatch) => {
+  try {
+    const { id, ...rest } = note;
+    if (userId) await updateFbNote(userId, id, rest);
+    else dispatch({ type: types.UPDATE_LOCAL_NOTE, note });
+  } catch (error) {
+    console.log('attemptUpdateNote -> error', error);
+  }
+};

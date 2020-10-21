@@ -15,6 +15,7 @@ import FullscreenLoader from './FullscreenLoader';
 import Navigation from './Navigation';
 import ManageLabelsModal from './Modals/ManageLabelsModal';
 import ToastNotification from './ToastNotification';
+import EditNoteModal from './Modals/EditNoteModal';
 import Notes from '../pages/Notes';
 import LabelNotes from '../pages/LabelNotes';
 import Archive from '../pages/Archive';
@@ -69,6 +70,7 @@ const AppShell = () => {
           </Container>
         </Box>
         <ManageLabelsModal open={showLabelModal} closeModal={closeLabelModal} />
+        <EditNoteModal />
         <ToastNotification />
       </ThemeProvider>
     </DndProvider>

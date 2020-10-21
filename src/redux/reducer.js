@@ -15,7 +15,8 @@ const initialState = {
     open: false,
     message: '',
     actionType: ''
-  }
+  },
+  editModalOpen: false
 };
 
 const appReducer = (state = initialState, action) => {
@@ -203,6 +204,21 @@ const appReducer = (state = initialState, action) => {
         })
       };
 
+    case types.EDIT_NOTE_MODAL_OPEN_STATE:
+      return {
+        ...state,
+        editModalOpen: action.state
+      };
+
+    case types.UPDATE_LOCAL_NOTE:
+      return {
+        ...state,
+        notes: state.notes.map((n) => {
+          if (n.id === action.note.id) return action.note;
+          return n;
+        })
+      };
+
     default:
       return state;
   }
@@ -224,3 +240,4 @@ export const selectSelectedLabel = (state) => state.app.selectedLabel;
 export const selectSelectedNote = (state) => state.app.selectedNote;
 export const selectToastProps = (state) => state.app.toastProps;
 export const selectAppInitialized = (state) => state.app.initialized;
+export const selectEditModalOpen = (state) => state.app.editModalOpen;

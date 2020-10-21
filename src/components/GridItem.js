@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const GridItem = ({ currentItem, footerComponent }) => {
+const GridItem = ({ currentItem, onClick, footerComponent }) => {
   // Hooks
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -51,14 +51,23 @@ const GridItem = ({ currentItem, footerComponent }) => {
   const handleRemoveLabel = (label) =>
     dispatch(attemptToggleLabel(authUser, currentItem, label));
 
-  const { title, text, labels, backgroundColor } = currentItem;
+  const { title, text, labels, backgroundColor, trashed } = currentItem;
 
   return (
-    <div className={classes.gridItem} style={{ backgroundColor }}>
+    <div
+      className={classes.gridItem}
+      style={{ backgroundColor }}
+      onClick={onClick ? () => onClick(currentItem) : null}
+      role="presentation"
+    >
       <div className={classes.inner}>
         {title && <div className={classes.title}>{title}</div>}
         <div className={classes.content}>{text}</div>
-        <NoteLabels clickable labels={labels} onRemove={handleRemoveLabel} />
+        <NoteLabels
+          clickable
+          labels={labels}
+          onRemove={trashed ? null : handleRemoveLabel}
+        />
         {footerComponent}
       </div>
     </div>
@@ -74,11 +83,13 @@ GridItem.propTypes = {
     labels: PropTypes.arrayOf(PropTypes.string),
     backgroundColor: PropTypes.string.isRequired
   }).isRequired,
-  footerComponent: PropTypes.node
+  footerComponent: PropTypes.node,
+  onClick: PropTypes.func
 };
 
 GridItem.defaultProps = {
-  footerComponent: null
+  footerComponent: null,
+  onClick: null
 };
 
 export default GridItem;

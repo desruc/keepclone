@@ -42,7 +42,7 @@ const NoteLabels = ({ clickable, onRemove, labels }) => {
             clickable={clickable}
             label={label}
             onClick={clickable ? () => handleOnClick(label) : null}
-            onDelete={() => onRemove(label)}
+            onDelete={onRemove ? () => onRemove(label) : null}
             size="small"
             variant="outlined"
             className={classes.chip}

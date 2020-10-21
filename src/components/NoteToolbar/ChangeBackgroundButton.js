@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import BrushOutlinedIcon from '@material-ui/icons/BrushOutlined';
 import Popover from '@material-ui/core/Popover';
@@ -11,7 +11,7 @@ import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
 
 import {
   backgroundColorStyles,
-  backgroundColors
+  getBackgroundColors
 } from '../../constants/backgroundColors';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +19,9 @@ const useStyles = makeStyles((theme) => ({
     width: 134,
     display: 'flex',
     flexWrap: 'wrap',
-    padding: '5px 7px 3px'
+    padding: '5px 7px 3px',
+    backgroundColor: theme.palette.background.default,
+    borderRadius: theme.shape.borderRadius - 4
   },
   button: {
     borderRadius: '50%',
@@ -39,11 +41,12 @@ const useStyles = makeStyles((theme) => ({
   defaultBorder: {
     borderColor: theme.palette.divider
   },
-  ...backgroundColorStyles()
+  ...backgroundColorStyles(theme)
 }));
 
 const ChangeBackgroundButton = forwardRef(({ onChange, currentColor }, ref) => {
   const classes = useStyles();
+  const theme = useTheme();
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -83,8 +86,8 @@ const ChangeBackgroundButton = forwardRef(({ onChange, currentColor }, ref) => {
           className: classes.paper
         }}
       >
-        {backgroundColors.map(({ key, title, color: buttonColor }) => {
-          const isSelected = buttonColor === currentColor;
+        {getBackgroundColors(theme).map(({ key, title }) => {
+          const isSelected = key === currentColor;
 
           const buttonClass = clsx({
             [classes.button]: true,
@@ -100,8 +103,8 @@ const ChangeBackgroundButton = forwardRef(({ onChange, currentColor }, ref) => {
               aria-label={`change to ${title}`}
               title={title}
               tabIndex={0}
-              onClick={() => handleChange(buttonColor)}
-              onKeyDown={() => handleChange(buttonColor)}
+              onClick={() => handleChange(key)}
+              onKeyDown={() => handleChange(key)}
               className={buttonClass}
             >
               {isSelected && <CheckRoundedIcon />}

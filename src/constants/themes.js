@@ -8,11 +8,16 @@ const overrides = {
   }
 };
 
-export const lightTheme = createMuiTheme({ overrides });
+const shape = {
+  borderRadius: 8
+};
+
+export const lightTheme = createMuiTheme({ overrides, shape });
 
 export const darkTheme = createMuiTheme({
   overrides,
   palette: {
     type: 'dark'
-  }
+  },
+  shape
 });

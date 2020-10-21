@@ -8,10 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import ModalBase from './ModalBase';
 import NoteLabels from '../NoteLabels';
 
-import {
-  backgroundColorStyles,
-  backgroundColors
-} from '../../constants/backgroundColors';
+import { backgroundColorStyles } from '../../constants/backgroundColors';
 
 const defaultNote = {
   id: '123',
@@ -30,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     width: 600,
     margin: '0px auto 16px auto',
     padding: theme.spacing(1),
-    borderRadius: 8,
+    borderRadius: theme.shape.borderRadius,
     backgroundColor: theme.palette.background.paper,
     transition: theme.transitions.create(['background-color'], {
       easing: theme.transitions.easing.easeInOut,
@@ -50,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(1)
     }
   },
-  ...backgroundColorStyles()
+  ...backgroundColorStyles(theme)
 }));
 
 const ViewNoteModal = ({ open, handleClose, note }) => {
@@ -58,13 +55,9 @@ const ViewNoteModal = ({ open, handleClose, note }) => {
 
   const { title, text, labels, backgroundColor } = note || defaultNote;
 
-  const { key: bgKey } = backgroundColors.find(
-    (c) => c.color === backgroundColor
-  );
-
   const paperClass = clsx({
     [classes.paper]: true,
-    [classes[bgKey]]: true
+    [classes[backgroundColor]]: true
   });
 
   return (

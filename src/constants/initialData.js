@@ -8,7 +8,7 @@ export const initialNotes = [
     text:
       "This keep clone was built with React and uses Firebase as it's database",
     labels: [],
-    backgroundColor: 'transparent',
+    backgroundColor: 'default',
     archived: false,
     trashed: false
   },
@@ -18,7 +18,7 @@ export const initialNotes = [
     title: '🤏 Drag and drop',
     text: 'Pick up a note and drag it around',
     labels: ['react', 'keepclone'],
-    backgroundColor: 'transparent',
+    backgroundColor: 'default',
     archived: false,
     trashed: false
   },
@@ -28,7 +28,7 @@ export const initialNotes = [
     title: 'Create a label',
     text: 'Labels are a great way to group your notes!',
     labels: ['keepclone', 'firebase'],
-    backgroundColor: 'transparent',
+    backgroundColor: 'default',
     archived: false,
     trashed: false
   },
@@ -38,7 +38,7 @@ export const initialNotes = [
     title: 'Change the background color',
     text: '',
     labels: ['firebase'],
-    backgroundColor: 'transparent',
+    backgroundColor: 'default',
     archived: false,
     trashed: false
   },
@@ -56,7 +56,7 @@ export const initialNotes = [
       rows!
     `,
     labels: ['react'],
-    backgroundColor: 'transparent',
+    backgroundColor: 'default',
     archived: false,
     trashed: false
   }

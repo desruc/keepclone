@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 500,
     padding: '48px 40px 36px',
     border: '1px solid #dadce0',
-    borderRadius: 8,
+    borderRadius: theme.shape.borderRadius,
     width: 450,
     '& .MuiTextField-root, .MuiButtonBase-root': {
       display: 'block',

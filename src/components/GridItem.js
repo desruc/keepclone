@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -8,6 +9,8 @@ import NoteLabels from './NoteLabels';
 
 import { attemptToggleLabel } from '../redux/actions';
 import { selectUser } from '../redux/reducer';
+
+import { backgroundColorStyles } from '../constants/backgroundColors';
 
 const useStyles = makeStyles((theme) => ({
   gridItem: {
@@ -39,7 +42,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.825rem',
     flex: 1,
     whiteSpace: 'pre-line'
-  }
+  },
+  ...backgroundColorStyles(theme)
 }));
 
 const GridItem = ({ currentItem, onClick, footerComponent }) => {
@@ -53,10 +57,14 @@ const GridItem = ({ currentItem, onClick, footerComponent }) => {
 
   const { title, text, labels, backgroundColor, trashed } = currentItem;
 
+  const gridItemClass = clsx({
+    [classes.gridItem]: true,
+    [classes[backgroundColor]]: true
+  });
+
   return (
     <div
-      className={classes.gridItem}
-      style={{ backgroundColor }}
+      className={gridItemClass}
       onClick={onClick ? () => onClick(currentItem) : null}
       role="presentation"
     >
@@ -81,7 +89,8 @@ GridItem.propTypes = {
     title: PropTypes.string,
     text: PropTypes.string,
     labels: PropTypes.arrayOf(PropTypes.string),
-    backgroundColor: PropTypes.string.isRequired
+    backgroundColor: PropTypes.string.isRequired,
+    trashed: PropTypes.bool.isRequired
   }).isRequired,
   footerComponent: PropTypes.node,
   onClick: PropTypes.func

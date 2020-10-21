@@ -22,10 +22,7 @@ import {
 } from '../../redux/reducer';
 import { EDIT_NOTE_MODAL_OPEN_STATE } from '../../redux/types';
 
-import {
-  backgroundColorStyles,
-  backgroundColors
-} from '../../constants/backgroundColors';
+import { backgroundColorStyles } from '../../constants/backgroundColors';
 
 const defaultNote = {
   id: '123',
@@ -33,7 +30,7 @@ const defaultNote = {
   title: '',
   text: '',
   labels: [],
-  backgroundColor: 'transparent',
+  backgroundColor: 'default',
   archived: false,
   trashed: false
 };
@@ -44,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     width: 600,
     margin: '0px auto 16px auto',
     padding: theme.spacing(1),
-    borderRadius: 8,
+    borderRadius: theme.shape.borderRadius,
     backgroundColor: theme.palette.background.paper,
     transition: theme.transitions.create(['background-color'], {
       easing: theme.transitions.easing.easeInOut,
@@ -64,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(1)
     }
   },
-  ...backgroundColorStyles()
+  ...backgroundColorStyles(theme)
 }));
 
 const EditNoteModal = () => {
@@ -126,13 +123,9 @@ const EditNoteModal = () => {
 
   const { title, text, labels, backgroundColor } = note;
 
-  const { key: bgKey } = backgroundColors.find(
-    (c) => c.color === note.backgroundColor
-  );
-
   const paperClass = clsx({
     [classes.paper]: true,
-    [classes[bgKey]]: true
+    [classes[backgroundColor]]: true
   });
 
   return (

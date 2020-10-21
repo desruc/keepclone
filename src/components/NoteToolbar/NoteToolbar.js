@@ -39,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
     }),
     '& .MuiButtonBase-root:not(:last-child)': {
       marginRight: theme.spacing(1)
+    },
+    '& .MuiSvgIcon-root': {
+      height: 18,
+      width: 18
     }
   }
 }));

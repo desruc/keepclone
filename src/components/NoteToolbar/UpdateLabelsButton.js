@@ -17,7 +17,8 @@ import { selectLabels } from '../../redux/reducer';
 const useStyles = makeStyles((theme) => ({
   paper: {
     width: 225,
-    paddingTop: 10
+    paddingTop: 10,
+    borderRadius: theme.shape.borderRadius - 4
   },
   title: {
     fontSize: 14,
@@ -79,6 +80,7 @@ const UpdateLabelsButton = forwardRef(({ noteLabels, onChange }, ref) => {
           >
             <ListItemIcon>
               <Checkbox
+                size="small"
                 edge="start"
                 checked={noteLabels.some((l) => l === label)}
                 tabIndex={-1}

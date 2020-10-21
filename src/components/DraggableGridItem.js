@@ -14,6 +14,8 @@ import { EDIT_NOTE_MODAL_OPEN_STATE, SET_SELECTED_NOTE } from '../redux/types';
 import { attemptToggleLabel } from '../redux/actions';
 import { selectUser } from '../redux/reducer';
 
+import { backgroundColorStyles } from '../constants/backgroundColors';
+
 const useStyles = makeStyles((theme) => ({
   gridItem: {
     cursor: 'default',
@@ -49,7 +51,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.825rem',
     flex: 1,
     whiteSpace: 'pre-line'
-  }
+  },
+  ...backgroundColorStyles(theme)
 }));
 
 // Adapted from https://react-dnd.github.io/react-dnd/examples/sortable/simple
@@ -125,11 +128,6 @@ const DraggableGridItem = ({ currentItem, onDrop, footerComponent }) => {
 
   const opacity = isDragging ? 0 : 1;
 
-  const gridItemClass = clsx({
-    [classes.gridItem]: true,
-    [classes.dragging]: isDragging
-  });
-
   const authUser = useSelector((state) => selectUser(state));
   const handleRemoveLabel = (label) =>
     dispatch(attemptToggleLabel(authUser, currentItem, label));
@@ -151,11 +149,17 @@ const DraggableGridItem = ({ currentItem, onDrop, footerComponent }) => {
 
   const { title, text, labels, backgroundColor } = currentItem;
 
+  const gridItemClass = clsx({
+    [classes.gridItem]: true,
+    [classes.dragging]: isDragging,
+    [classes[backgroundColor]]: true
+  });
+
   return (
     <div
       ref={ref}
       className={gridItemClass}
-      style={{ opacity, backgroundColor }}
+      style={{ opacity }}
       onClick={setSelectedNote}
       role="presentation"
     >

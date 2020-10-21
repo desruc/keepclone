@@ -20,17 +20,18 @@ import { useOnClickOutside } from '../utils/hooks';
 
 import { randomId } from '../utils/helpers';
 
-import {
-  backgroundColorStyles,
-  backgroundColors
-} from '../constants/backgroundColors';
+import { backgroundColorStyles } from '../constants/backgroundColors';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     minHeight: 46,
     width: 600,
-    margin: '0px auto 16px auto',
+    margin: '0px auto 32px auto',
     padding: theme.spacing(1),
+    borderRadius: theme.shape.borderRadius,
+    border: '1px solid',
+    borderColor:
+      theme.palette.type === 'dark' ? theme.palette.divider : 'transparent',
     transition: theme.transitions.create(['background-color'], {
       easing: theme.transitions.easing.easeInOut,
       duration: theme.transitions.duration.shorter
@@ -46,9 +47,13 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     '& .MuiIconButton-root': {
       marginRight: theme.spacing(1)
+    },
+    '& .MuiSvgIcon-root': {
+      height: 18,
+      width: 18
     }
   },
-  ...backgroundColorStyles()
+  ...backgroundColorStyles(theme)
 }));
 
 const NoteInput = ({ label }) => {
@@ -70,7 +75,7 @@ const NoteInput = ({ label }) => {
     title: '',
     text: '',
     labels: label ? [label] : [],
-    backgroundColor: 'transparent',
+    backgroundColor: 'default',
     archived: false,
     trashed: false
   });
@@ -96,7 +101,7 @@ const NoteInput = ({ label }) => {
       title: '',
       text: '',
       labels: [],
-      backgroundColor: 'transparent'
+      backgroundColor: 'default'
     });
   };
 
@@ -143,20 +148,15 @@ const NoteInput = ({ label }) => {
     labelPopoverRef
   ]);
 
-  const { key: bgKey } = backgroundColors.find(
-    (c) => c.color === note.backgroundColor
-  );
-
-  const paperClass = clsx({
-    [classes.paper]: true,
-    [classes[bgKey]]: true
-  });
-
   // Constants
   const { title, text, labels, backgroundColor } = note;
 
+  const paperClass = clsx({
+    [classes.paper]: true,
+    [classes[backgroundColor]]: true
+  });
   return (
-    <Paper ref={containerRef} className={paperClass}>
+    <Paper ref={containerRef} className={paperClass} elevation={5}>
       {focused && (
         <InputBase
           fullWidth
@@ -182,6 +182,7 @@ const NoteInput = ({ label }) => {
           <Box
             display="flex"
             justifyContent="flex-end"
+            alignItems="center"
             className={classes.toolbar}
           >
             <UpdateLabelsButton

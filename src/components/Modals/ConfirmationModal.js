@@ -10,7 +10,7 @@ import ModalBase from './ModalBase';
 const useStyles = makeStyles((theme) => ({
   paper: {
     width: 430,
-    borderRadius: 8,
+    borderRadius: theme.shape.borderRadius,
     padding: 24
   },
   toolbar: {

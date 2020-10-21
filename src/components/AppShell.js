@@ -27,7 +27,7 @@ import { selectColorMode } from '../redux/reducer';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    paddingTop: theme.spacing(16)
+    paddingTop: theme.spacing(12)
   }
 }));
 

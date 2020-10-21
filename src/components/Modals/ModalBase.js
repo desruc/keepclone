@@ -11,7 +11,8 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: theme.spacing(2)
   },
   paper: {
     backgroundColor: theme.palette.background.paper,

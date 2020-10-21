@@ -12,12 +12,23 @@ const shape = {
   borderRadius: 8
 };
 
-export const lightTheme = createMuiTheme({ overrides, shape });
+export const lightTheme = createMuiTheme({
+  overrides,
+  shape,
+  palette: {
+    warning: {
+      main: 'rgb(254, 239, 195)'
+    }
+  }
+});
 
 export const darkTheme = createMuiTheme({
   overrides,
   palette: {
-    type: 'dark'
+    type: 'dark',
+    warning: {
+      main: '#41331c'
+    }
   },
   shape
 });

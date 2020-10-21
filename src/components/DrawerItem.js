@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
     outline: 'none !important',
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    paddingTop: theme.spacing(1) - 2,
+    paddingBottom: theme.spacing(1) - 2,
     border: '1px solid',
     borderColor: 'transparent',
     transition: theme.transitions.create(
@@ -73,7 +73,8 @@ const useStyles = makeStyles((theme) => ({
   },
   listItemText: {
     fontWeight: 500,
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    fontSize: '0.875rem'
   },
   activePath: {
     backgroundColor: `${theme.palette.warning.light} !important`,

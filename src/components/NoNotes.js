@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     opacity: 0.2
   },
   typography: {
-    fontWeight: 600,
+    fontWeight: 500,
     fontSize: '1.375rem',
     color: theme.palette.text.disabled,
     cursor: 'default'

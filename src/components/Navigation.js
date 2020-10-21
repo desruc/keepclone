@@ -24,7 +24,7 @@ import { selectLabels, selectSelectedLabel } from '../redux/reducer';
 import { CHANGE_COLOR_MODE } from '../redux/types';
 
 const computeHeading = (pathname, currentLabel) => {
-  if (currentLabel) return currentLabel.label;
+  if (currentLabel) return currentLabel;
 
   switch (pathname) {
     case '/archive':
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.primary
   },
   menuButton: {
-    marginRight: 36
+    marginRight: theme.spacing(1)
   },
   drawer: {
     width: drawerWidth,
@@ -86,6 +86,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
     border: 'none'
   },
+  mobileDrawerRoot: {
+    '& .MuiListItem-root': {
+      width: 280
+    }
+  },
   toolbar: {
     display: 'flex',
     alignItems: 'center',
@@ -94,6 +99,10 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar
   },
   pageHeading: {
+    maxWidth: 150,
+    [theme.breakpoints.up('md')]: {
+      maxWidth: 350
+    },
     fontWeight: 600
   }
 }));
@@ -141,7 +150,8 @@ const Navigation = ({ colorMode, openLabelManager }) => {
   });
 
   // Constants
-  const computedLabel = pathname.includes('/label/') && selectedLabel;
+  const computedLabel =
+    pathname.includes('/label/') && selectedLabel ? selectedLabel : null;
   const lightMode = colorMode === 'light';
 
   // Toggle color modes
@@ -208,7 +218,7 @@ const Navigation = ({ colorMode, openLabelManager }) => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography color="textPrimary" className={classes.pageHeading}>
+            <Typography color="textPrimary" className={classes.pageHeading} noWrap>
               {computeHeading(pathname, computedLabel)}
             </Typography>
           </Box>
@@ -233,7 +243,10 @@ const Navigation = ({ colorMode, openLabelManager }) => {
           ModalProps={{ keepMounted: true }}
           className={classes.drawer}
           anchor="left"
-          classes={{ paper: classes.drawerPaper }}
+          classes={{
+            root: classes.mobileDrawerRoot,
+            paper: classes.drawerPaper
+          }}
         >
           {drawerLinks}
         </Drawer>

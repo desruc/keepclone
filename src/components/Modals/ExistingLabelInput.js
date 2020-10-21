@@ -13,10 +13,18 @@ import DoneIcon from '@material-ui/icons/Done';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
-    padding: `${theme.spacing(1)}px 0px`
+    justifyContent: 'space-between',
+    padding: `${theme.spacing(1)}px 0px`,
+    '& .MuiSvgIcon-root': {
+      height: 18,
+      width: 18
+    }
   },
   iconButton: {
     margin: `0px ${theme.spacing(1)}px`
+  },
+  inputRoot: {
+    fontSize: 14
   },
   inputUnderline: {
     borderColor: 'transparent',
@@ -79,7 +87,7 @@ const ExistingLabelInput = ({ labelId, label, onDelete, onChange, onSave }) => {
         inputRef={inputRef}
         value={label}
         aria-label={`${label.replace(/\s/g, '-')}-label-input`}
-        classes={{ underline: classes.inputUnderline }}
+        classes={{ root: classes.inputRoot, underline: classes.inputUnderline }}
         onFocus={markFocused}
         // onBlur={unmarkFocused}
         onChange={onChange(labelId)}

@@ -45,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     '& .MuiIconButton-root': {
       marginRight: theme.spacing(1)
+    },
+    '& .MuiSvgIcon-root': {
+      height: 18,
+      width: 18
     }
   },
   ...backgroundColorStyles(theme)

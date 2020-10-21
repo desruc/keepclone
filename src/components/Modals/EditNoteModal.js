@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
     fontSize: '1.375rem'
   },
+  text: {
+    marginBottom: theme.spacing(2)
+  },
   button: {
     textTransform: 'none',
     fontWeight: 500
@@ -59,6 +62,10 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     '& .MuiIconButton-root': {
       marginRight: theme.spacing(1)
+    },
+    '& .MuiSvgIcon-root': {
+      height: 18,
+      width: 18
     }
   },
   ...backgroundColorStyles(theme)
@@ -148,9 +155,10 @@ const EditNoteModal = () => {
         value={text}
         onChange={onInputChange}
         multiline
+        className={classes.text}
       />
       <NoteLabels labels={labels} onRemove={removeLabel} />
-      <Box display="flex" justifyContent="flex-end" className={classes.toolbar}>
+      <Box display="flex" justifyContent="flex-end" alignItems="center" className={classes.toolbar}>
         <UpdateLabelsButton noteLabels={labels} onChange={onLabelChange} />
         <ChangeBackgroundButton
           onChange={onBackgroundChange}

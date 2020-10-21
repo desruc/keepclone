@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontSize: '1rem',
-    fontWeight: 600,
+    fontWeight: 500,
     marginBottom: theme.spacing(0.75)
   },
   content: {

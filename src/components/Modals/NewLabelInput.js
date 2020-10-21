@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,10 +13,18 @@ import DoneIcon from '@material-ui/icons/Done';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
-    padding: `${theme.spacing(1)}px 0px`
+    justifyContent: 'space-between',
+    padding: `${theme.spacing(1)}px 0px`,
+    '& .MuiSvgIcon-root': {
+      height: 18,
+      width: 18
+    }
   },
   iconButton: {
     margin: `0px ${theme.spacing(1)}px`
+  },
+  inputRoot: {
+    fontSize: 14
   },
   inputUnderline: {
     borderColor: 'transparent',
@@ -26,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
     '&:after': {
       borderColor: theme.palette.divider
     }
+  },
+  invisible: {
+    opacity: 0
   }
 }));
 
@@ -63,6 +75,11 @@ const NewLabelInput = ({ label, clearInput, onChange, onSave }) => {
 
   const hasValue = label.trim().length > 0;
 
+  const saveButtonClass = clsx({
+    [classes.iconButton]: true,
+    [classes.invisible]: !focused
+  });
+
   return (
     <ListItem className={classes.listItem}>
       <IconButton
@@ -80,17 +97,15 @@ const NewLabelInput = ({ label, clearInput, onChange, onSave }) => {
         onChange={onChange}
         onFocus={markFocused}
         // onBlur={unmarkFocused}
-        classes={{ underline: classes.inputUnderline }}
+        classes={{ root: classes.inputRoot, underline: classes.inputUnderline }}
       />
-      {focused && (
-        <IconButton
-          size="small"
-          className={classes.iconButton}
-          onClick={handleSave}
-        >
-          <DoneIcon />
-        </IconButton>
-      )}
+      <IconButton
+        size="small"
+        className={saveButtonClass}
+        onClick={handleSave}
+      >
+        <DoneIcon />
+      </IconButton>
     </ListItem>
   );
 };

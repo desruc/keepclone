@@ -24,8 +24,10 @@ import { backgroundColorStyles } from '../constants/backgroundColors';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
+    [theme.breakpoints.up('sm')]: {
+      width: 600
+    },
     minHeight: 46,
-    width: 600,
     margin: '0px auto 32px auto',
     padding: theme.spacing(1),
     borderRadius: theme.shape.borderRadius,

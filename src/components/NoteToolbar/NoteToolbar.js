@@ -30,7 +30,9 @@ import { selectUser } from '../../redux/reducer';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
-    opacity: 0,
+    [theme.breakpoints.up('lg')]: {
+      opacity: 0
+    },
     display: 'flex',
     justifyContent: 'flex-end',
     transition: theme.transitions.create(['opacity'], {

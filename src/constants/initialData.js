@@ -7,7 +7,7 @@ export const initialNotes = [
     title: 'Welcome! 😁',
     text:
       "This keep clone was built with React and uses Firebase as it's database",
-    labels: [],
+    labels: ['react', 'keepclone', 'firebase'],
     backgroundColor: 'default',
     archived: false,
     trashed: false
@@ -17,7 +17,7 @@ export const initialNotes = [
     index: 1,
     title: '🤏 Drag and drop',
     text: 'Pick up a note and drag it around',
-    labels: ['react', 'keepclone'],
+    labels: [],
     backgroundColor: 'default',
     archived: false,
     trashed: false

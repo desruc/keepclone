@@ -7,12 +7,11 @@ import IconButton from '@material-ui/core/IconButton';
 import PersonIcon from '@material-ui/icons/Person';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-import AuthFormModal from './Modals/AuthFormModal';
 import ConfirmationModal from './Modals/ConfirmationModal';
 
 import { selectUser } from '../redux/reducer';
 
-import { logout } from '../firebase/fbAuth';
+import { loginWithGoogle, logout } from '../firebase/fbAuth';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -24,11 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const UserAuth = () => {
   const classes = useStyles();
 
-  const [loginOpen, setLoginOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
-
-  const openLoginModal = () => setLoginOpen(true);
-  const closeLoginModal = () => setLoginOpen(false);
 
   const openLogoutModal = () => setLogoutOpen(true);
   const closeLogoutModal = () => setLogoutOpen(false);
@@ -43,20 +38,26 @@ const UserAuth = () => {
 
   const loggedIn = Boolean(authUser);
 
-  const computedIconOnClick = loggedIn ? openLogoutModal : openLoginModal;
+  const handleGoogleLogin = () => {
+    loginWithGoogle().catch((error) => {
+      // TODO: Display error
+      console.log('handleGoogleLogin -> error', error);
+    });
+  };
+
+  const computedIconOnClick = loggedIn ? openLogoutModal : handleGoogleLogin;
 
   return (
     <>
       <IconButton
         color="inherit"
-        aria-label={loggedIn ? 'Log out' : 'Log in'}
-        title={loggedIn ? 'Log out' : 'Log in'}
+        aria-label={loggedIn ? 'Log out' : 'Log in with Google'}
+        title={loggedIn ? 'Log out' : 'Log in with Google'}
         onClick={computedIconOnClick}
         className={classes.icon}
       >
         {loggedIn ? <ExitToAppIcon /> : <PersonIcon />}
       </IconButton>
-      <AuthFormModal open={loginOpen} handleClose={closeLoginModal} />
       <ConfirmationModal
         open={logoutOpen}
         handleClose={closeLogoutModal}

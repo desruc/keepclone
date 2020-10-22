@@ -1,18 +1,6 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
-export const loginWithEmail = async (email, password) => {
-  try {
-    const user = await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password);
-    return user;
-  } catch (error) {
-    // TODO: map error codes
-    return error;
-  }
-};
-
 export const logout = async () => {
   try {
     return await firebase.auth().signOut();

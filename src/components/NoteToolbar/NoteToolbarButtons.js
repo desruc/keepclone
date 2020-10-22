@@ -55,7 +55,7 @@ export const PermanentlyDeleteItem = ({ onClick }) => {
   };
 
   const handleClick = (e) => {
-    closeModal();
+    closeModal(e);
     onClick(e);
   };
 

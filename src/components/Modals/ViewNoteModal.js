@@ -82,12 +82,12 @@ const ViewNoteModal = ({ open, handleClose, note }) => {
 
   const onRestoreNote = (e) => {
     e.stopPropagation();
-    handleClose();
+    handleClose(e);
     dispatch(attemptRestoreNote(authUser, note));
   };
 
-  const onPermanetlyDeleteNote = () => {
-    handleClose();
+  const onPermanetlyDeleteNote = (e) => {
+    handleClose(e);
     dispatch(attemptPermenatlyDeleteNote(authUser, note));
   };
 

@@ -55,7 +55,7 @@ const LabelNotes = () => {
     }
   }, [matchedLabelObject]);
 
-  if (!matchedLabelObject) return <Redirect to="/404" />;
+  if (!matchedLabelObject) return <Redirect to="/" />;
 
   const filteredActiveNotes = activeNotes.filter(({ labels }) =>
     labels.some((l) => l === matchedLabelObject.label)

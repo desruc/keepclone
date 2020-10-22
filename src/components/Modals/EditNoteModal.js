@@ -8,7 +8,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
-import NoteLabels from '../NoteLabels';
+import LabelsAndTimestamp from '../LabelsAndTimestamp';
 import ChangeBackgroundButton from '../NoteToolbar/ChangeBackgroundButton';
 import UpdateLabelsButton from '../NoteToolbar/UpdateLabelsButton';
 
@@ -157,8 +157,13 @@ const EditNoteModal = () => {
         multiline
         className={classes.text}
       />
-      <NoteLabels labels={labels} onRemove={removeLabel} />
-      <Box display="flex" justifyContent="flex-end" alignItems="center" className={classes.toolbar}>
+      <LabelsAndTimestamp onRemoveLabel={removeLabel} note={note} />
+      <Box
+        display="flex"
+        justifyContent="flex-end"
+        alignItems="center"
+        className={classes.toolbar}
+      >
         <UpdateLabelsButton noteLabels={labels} onChange={onLabelChange} />
         <ChangeBackgroundButton
           onChange={onBackgroundChange}

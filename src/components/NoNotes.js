@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import NotesIcon from '@material-ui/icons/Notes';
 import LabelOutlined from '@material-ui/icons/LabelOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import BathtubRoundedIcon from '@material-ui/icons/BathtubRounded';
 
 const useStyles = makeStyles((theme) => ({
   wrap: {
@@ -35,7 +36,8 @@ const NoNotes = ({ message, icon }) => {
   const icons = {
     notes: NotesIcon,
     label: LabelOutlined,
-    trash: DeleteOutlinedIcon
+    trash: DeleteOutlinedIcon,
+    notFound: BathtubRoundedIcon
   };
 
   const ComputedIcon = icons[icon];
@@ -43,7 +45,7 @@ const NoNotes = ({ message, icon }) => {
   return (
     <div className={classes.wrap}>
       <ComputedIcon className={classes.icon} fontSize="inherit" />
-      <Typography className={classes.typography} component="h3">
+      <Typography align="center" className={classes.typography} component="h3">
         {message}
       </Typography>
     </div>
@@ -51,7 +53,7 @@ const NoNotes = ({ message, icon }) => {
 };
 
 NoNotes.propTypes = {
-  icon: PropTypes.oneOf(['notes', 'label', 'trash']),
+  icon: PropTypes.oneOf(['notes', 'label', 'trash', 'notFound']),
   message: PropTypes.string
 };
 

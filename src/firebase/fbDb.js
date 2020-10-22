@@ -30,10 +30,10 @@ export const updateFbNote = (userId, noteDocId, note) =>
     .doc(userId)
     .collection('notes')
     .doc(noteDocId)
-    .update(note);
+    .update({ ...note, timestamp: new Date() });
 
 export const addFbNote = async (userId, note) =>
-  db.collection('users').doc(userId).collection('notes').add(note);
+  db.collection('users').doc(userId).collection('notes').add({ ...note, timestamp: new Date() });
 
 export const addFbLabel = async (userId, label) =>
   db.collection('users').doc(userId).collection('labels').add(label);

@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const NoteLabels = ({ clickable, onRemove, labels }) => {
+const NoteLabels = ({ clickable, onRemove, labels, noMargin }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -30,7 +30,7 @@ const NoteLabels = ({ clickable, onRemove, labels }) => {
   const hasLabels = labels.length > 0;
 
   const wrapClass = clsx({
-    [classes.wrap]: hasLabels,
+    [classes.wrap]: hasLabels && !noMargin,
     [classes.hidden]: !hasLabels
   });
 
@@ -57,11 +57,13 @@ const NoteLabels = ({ clickable, onRemove, labels }) => {
 NoteLabels.propTypes = {
   clickable: PropTypes.bool,
   labels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onRemove: PropTypes.func.isRequired
+  onRemove: PropTypes.func.isRequired,
+  noMargin: PropTypes.bool
 };
 
 NoteLabels.defaultProps = {
-  clickable: false
+  clickable: false,
+  noMargin: false
 };
 
 export default NoteLabels;

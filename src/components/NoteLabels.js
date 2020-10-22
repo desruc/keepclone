@@ -25,7 +25,15 @@ const NoteLabels = ({ clickable, onRemove, labels, noMargin }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const handleOnClick = (label) => history.push(`/label/${label}`);
+  const handleOnClick = (e, label) => {
+    e.stopPropagation();
+    history.push(`/label/${label}`);
+  };
+
+  const handleRemove = (e, label) => {
+    e.stopPropagation();
+    onRemove(label);
+  };
 
   const hasLabels = labels.length > 0;
 
@@ -42,8 +50,8 @@ const NoteLabels = ({ clickable, onRemove, labels, noMargin }) => {
             key={label}
             clickable={clickable}
             label={label}
-            onClick={clickable ? () => handleOnClick(label) : null}
-            onDelete={onRemove ? () => onRemove(label) : null}
+            onClick={clickable ? (e) => handleOnClick(e, label) : null}
+            onDelete={onRemove ? (e) => handleRemove(e, label) : null}
             size="small"
             variant="outlined"
             className={classes.chip}
@@ -57,13 +65,14 @@ const NoteLabels = ({ clickable, onRemove, labels, noMargin }) => {
 NoteLabels.propTypes = {
   clickable: PropTypes.bool,
   labels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onRemove: PropTypes.func.isRequired,
+  onRemove: PropTypes.func,
   noMargin: PropTypes.bool
 };
 
 NoteLabels.defaultProps = {
   clickable: false,
-  noMargin: false
+  noMargin: false,
+  onRemove: null
 };
 
 export default NoteLabels;

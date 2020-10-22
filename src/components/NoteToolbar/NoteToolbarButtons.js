@@ -44,8 +44,20 @@ RestoreItem.propTypes = {
 export const PermanentlyDeleteItem = ({ onClick }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+  const openModal = (e) => {
+    e.stopPropagation();
+    setModalOpen(true);
+  };
+
+  const closeModal = (e) => {
+    e.stopPropagation();
+    setModalOpen(false);
+  };
+
+  const handleClick = (e) => {
+    closeModal();
+    onClick(e);
+  };
 
   return (
     <>
@@ -61,7 +73,7 @@ export const PermanentlyDeleteItem = ({ onClick }) => {
         open={modalOpen}
         handleClose={closeModal}
         prompt="Are you sure you want to delete this note? It will be gone forever"
-        onConfirm={onClick}
+        onConfirm={handleClick}
       />
     </>
   );

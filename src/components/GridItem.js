@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import NoteLabels from './NoteLabels';
 
+import { EDIT_NOTE_MODAL_OPEN_STATE, SET_SELECTED_NOTE } from '../redux/types';
 import { attemptToggleLabel } from '../redux/actions';
 import { selectUser } from '../redux/reducer';
 
@@ -28,10 +29,9 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   inner: {
-    minHeight: '100%',
+    height: '100%',
     display: 'flex',
-    flexDirection: 'column',
-    flex: 1
+    flexDirection: 'column'
   },
   title: {
     fontSize: '1rem',
@@ -40,8 +40,13 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     fontSize: '0.825rem',
-    flex: 1,
     whiteSpace: 'pre-line'
+  },
+  footer: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end'
   },
   ...backgroundColorStyles(theme)
 }));
@@ -55,6 +60,14 @@ const GridItem = ({ currentItem, onClick, footerComponent }) => {
   const handleRemoveLabel = (label) =>
     dispatch(attemptToggleLabel(authUser, currentItem, label));
 
+  const openEditModal = () => {
+    dispatch({ type: SET_SELECTED_NOTE, note: currentItem });
+    dispatch({ type: EDIT_NOTE_MODAL_OPEN_STATE, state: true });
+  };
+
+  const handleOnClick = () =>
+    onClick ? onClick(currentItem) : openEditModal();
+
   const { title, text, labels, backgroundColor, trashed } = currentItem;
 
   const gridItemClass = clsx({
@@ -63,20 +76,20 @@ const GridItem = ({ currentItem, onClick, footerComponent }) => {
   });
 
   return (
-    <div
-      className={gridItemClass}
-      onClick={onClick ? () => onClick(currentItem) : null}
-      role="presentation"
-    >
+    <div className={gridItemClass} onClick={handleOnClick} role="presentation">
       <div className={classes.inner}>
-        {title && <div className={classes.title}>{title}</div>}
-        <div className={classes.content}>{text}</div>
-        <NoteLabels
-          clickable
-          labels={labels}
-          onRemove={trashed ? null : handleRemoveLabel}
-        />
-        {footerComponent}
+        <div className={classes.contentWrap}>
+          {title && <div className={classes.title}>{title}</div>}
+          <div className={classes.content}>{text}</div>
+        </div>
+        <div className={classes.footer}>
+          <NoteLabels
+            clickable
+            labels={labels}
+            onRemove={trashed ? null : handleRemoveLabel}
+          />
+          {footerComponent}
+        </div>
       </div>
     </div>
   );

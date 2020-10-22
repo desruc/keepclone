@@ -53,7 +53,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.375rem'
   },
   text: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    fontSize: '0.825rem'
   },
   button: {
     textTransform: 'none',

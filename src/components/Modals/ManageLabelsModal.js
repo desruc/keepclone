@@ -26,10 +26,17 @@ import {
 } from '../../redux/actions';
 
 const useStyles = makeStyles((theme) => ({
+  paper: {
+    paddingBottom: theme.spacing(1.25)
+  },
   listWrap: {
     width: 300,
     padding: theme.spacing(1),
     borderBottom: `1px solid ${theme.palette.divider}`
+  },
+  list: {
+    maxHeight: 350,
+    overflow: 'auto'
   },
   title: {
     fontWeight: 500
@@ -192,10 +199,14 @@ const ManageLabelsModal = ({ open, closeModal }) => {
   const { label } = newLabelState;
 
   return (
-    <ModalBase open={open} handleClose={handleClose}>
+    <ModalBase
+      open={open}
+      handleClose={handleClose}
+      paperClassName={classes.paper}
+    >
       <div className={classes.listWrap}>
         <Typography className={classes.title}>Edit labels</Typography>
-        <List>
+        <List className={classes.list}>
           <NewLabelInput
             label={label}
             clearInput={clearNewLabel}

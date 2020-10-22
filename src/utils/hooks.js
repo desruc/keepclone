@@ -22,10 +22,12 @@ export const useMasonryLayout = (ref, dep = null) => {
           10
         );
         const rowSpan = Math.ceil(
-          (item.firstChild.getBoundingClientRect().height + rowGap) /
+          (item.firstChild.firstChild.getBoundingClientRect().height +
+            rowGap +
+            80) /
             (rowHeight + rowGap)
         );
-        item.style.display = 'flex'; // eslint-disable-line
+
         item.style.gridRowEnd = `span ${rowSpan}`; // eslint-disable-line
       });
     }

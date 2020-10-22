@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const LabelsAndTimestamp = ({ onRemoveLabel, note }) => {
   const classes = useStyles();
 
-  const { archived, trashed, labels, timestamp } = note;
+  const { archived, trashed, labels, timestamp } = note || {};
 
   const formattedDate = getFormattedDate(timestamp);
 
@@ -40,14 +40,22 @@ const LabelsAndTimestamp = ({ onRemoveLabel, note }) => {
   const computedDateMessage = getTimeMessage();
 
   const hasTimestamp = Boolean(computedDateMessage);
+  const hasLabels = labels.length > 0;
+  const noMeta = !hasTimestamp && !hasLabels;
 
   return (
-    <Grid container spacing={1} className={classes.container}>
-      <Grid item xs={12} md={hasTimestamp ? 6 : 12}>
-        <NoteLabels labels={labels} onRemove={onRemoveLabel} noMargin />
-      </Grid>
+    <Grid
+      container
+      spacing={noMeta ? 0 : 1}
+      className={noMeta ? '' : classes.container}
+    >
+      {hasLabels && (
+        <Grid item xs={12} md={hasTimestamp ? 6 : 12}>
+          <NoteLabels labels={labels} onRemove={onRemoveLabel} noMargin />
+        </Grid>
+      )}
       {hasTimestamp && (
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={hasLabels ? 6 : 12}>
           <Typography align="right" className={classes.time}>
             {computedDateMessage}
           </Typography>
@@ -73,11 +81,12 @@ LabelsAndTimestamp.propTypes = {
       nanoseconds: PropTypes.number,
       toDate: PropTypes.func
     })
-  }).isRequired
+  })
 };
 
 LabelsAndTimestamp.defaultProps = {
-  onRemoveLabel: null
+  onRemoveLabel: null,
+  note: null
 };
 
 export default LabelsAndTimestamp;

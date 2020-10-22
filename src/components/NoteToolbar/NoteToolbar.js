@@ -65,16 +65,30 @@ const NoteToolbar = ({
   const authUser = useSelector((state) => selectUser(state));
 
   // Event handlers
-  const onArchiveNote = () => dispatch(attemptArchiveNote(authUser, note));
+  const onArchiveNote = (e) => {
+    e.stopPropagation();
+    dispatch(attemptArchiveNote(authUser, note));
+  };
 
-  const onUnarchiveNote = () => dispatch(attemptUnarchiveNote(authUser, note));
+  const onUnarchiveNote = (e) => {
+    e.stopPropagation();
+    dispatch(attemptUnarchiveNote(authUser, note));
+  };
 
-  const onDeleteNote = () => dispatch(attemptDeleteNote(authUser, note));
+  const onDeleteNote = (e) => {
+    e.stopPropagation();
+    dispatch(attemptDeleteNote(authUser, note));
+  };
 
-  const onRestoreNote = () => dispatch(attemptRestoreNote(authUser, note));
+  const onRestoreNote = (e) => {
+    e.stopPropagation();
+    dispatch(attemptRestoreNote(authUser, note));
+  };
 
-  const onPermanetlyDeleteNote = () =>
+  const onPermanetlyDeleteNote = (e) => {
+    e.stopPropagation();
     dispatch(attemptPermenatlyDeleteNote(authUser, note));
+  };
 
   const onChangeLabel = (label) =>
     dispatch(attemptToggleLabel(authUser, note, label));

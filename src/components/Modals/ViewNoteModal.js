@@ -1,12 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import ModalBase from './ModalBase';
-import NoteLabels from '../NoteLabels';
+import LabelsAndTimestamp from '../LabelsAndTimestamp';
+import {
+  RestoreItem,
+  PermanentlyDeleteItem
+} from '../NoteToolbar/NoteToolbarButtons';
+
+import {
+  attemptRestoreNote,
+  attemptPermenatlyDeleteNote
+} from '../../redux/actions';
+import { selectUser } from '../../redux/reducer';
+import { SET_TOAST_PROPS } from '../../redux/types';
 
 import { backgroundColorStyles } from '../../constants/backgroundColors';
 
@@ -36,13 +48,21 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     marginBottom: theme.spacing(1),
-    fontSize: '1.375rem'
+    fontSize: '1.375rem',
+    fontWeight: 500
+  },
+  text: {
+    fontSize: '0.825rem',
+    marginBottom: theme.spacing(2)
   },
   button: {
     textTransform: 'none',
     fontWeight: 500
   },
   toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
     '& .MuiIconButton-root': {
       marginRight: theme.spacing(1)
     },
@@ -56,8 +76,30 @@ const useStyles = makeStyles((theme) => ({
 
 const ViewNoteModal = ({ open, handleClose, note }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const { title, text, labels, backgroundColor } = note || defaultNote;
+  const authUser = useSelector((state) => selectUser(state));
+
+  const onRestoreNote = (e) => {
+    e.stopPropagation();
+    handleClose();
+    dispatch(attemptRestoreNote(authUser, note));
+  };
+
+  const onPermanetlyDeleteNote = () => {
+    handleClose();
+    dispatch(attemptPermenatlyDeleteNote(authUser, note));
+  };
+
+  const openToast = () => {
+    dispatch({
+      type: SET_TOAST_PROPS,
+      open: true,
+      message: 'Cannot edit notes in the trash'
+    });
+  };
+
+  const { title, text, backgroundColor } = note || defaultNote;
 
   const paperClass = clsx({
     [classes.paper]: true,
@@ -70,9 +112,15 @@ const ViewNoteModal = ({ open, handleClose, note }) => {
       handleClose={handleClose}
       paperClassName={paperClass}
     >
-      {title && <Typography className={classes.title}>{title}</Typography>}
-      <Typography>{text}</Typography>
-      <NoteLabels labels={labels} />
+      <div onClick={openToast} role="presentation">
+        {title && <Typography className={classes.title}>{title}</Typography>}
+        <Typography className={classes.text}>{text}</Typography>
+        <LabelsAndTimestamp note={note} />
+        <div className={classes.toolbar}>
+          <RestoreItem onClick={onRestoreNote} />
+          <PermanentlyDeleteItem onClick={onPermanetlyDeleteNote} />
+        </div>
+      </div>
     </ModalBase>
   );
 };

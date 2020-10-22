@@ -50,10 +50,18 @@ const ChangeBackgroundButton = forwardRef(({ onChange, currentColor }, ref) => {
 
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const openPopover = (e) => setAnchorEl(e.target);
-  const closePopover = () => setAnchorEl(null);
+  const openPopover = (e) => {
+    e.stopPropagation();
+    setAnchorEl(e.target);
+  };
 
-  const handleChange = (newColor) => {
+  const closePopover = (e) => {
+    e.stopPropagation();
+    setAnchorEl(null);
+  };
+
+  const handleChange = (e, newColor) => {
+    e.stopPropagation();
     onChange(newColor);
   };
 
@@ -103,8 +111,8 @@ const ChangeBackgroundButton = forwardRef(({ onChange, currentColor }, ref) => {
               aria-label={`change to ${title}`}
               title={title}
               tabIndex={0}
-              onClick={() => handleChange(key)}
-              onKeyDown={() => handleChange(key)}
+              onClick={(e) => handleChange(e, key)}
+              onKeyDown={(e) => handleChange(e, key)}
               className={buttonClass}
             >
               {isSelected && <CheckRoundedIcon />}

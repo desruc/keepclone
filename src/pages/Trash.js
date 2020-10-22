@@ -13,7 +13,11 @@ const Trash = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedNote, setSelectedNote] = useState(null);
 
-  const closeModal = () => setModalOpen(false);
+  const closeModal = (e) => {
+    e.stopPropagation();
+    setModalOpen(false);
+  };
+
   const onItemClick = (note) => {
     setSelectedNote(note);
     setModalOpen(true);

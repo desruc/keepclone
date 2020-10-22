@@ -37,10 +37,9 @@ const useStyles = makeStyles((theme) => ({
     opacity: 0
   },
   inner: {
-    minHeight: '100%',
+    height: '100%',
     display: 'flex',
-    flexDirection: 'column',
-    flex: 1
+    flexDirection: 'column'
   },
   title: {
     fontSize: '1rem',
@@ -49,8 +48,13 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     fontSize: '0.825rem',
-    flex: 1,
     whiteSpace: 'pre-line'
+  },
+  footer: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end'
   },
   ...backgroundColorStyles(theme)
 }));
@@ -61,8 +65,6 @@ const DraggableGridItem = ({ currentItem, onDrop, footerComponent }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const ref = useRef(null);
-
-  const innerRef = useRef(null);
 
   // Create drop target
   const [, drop] = useDrop({
@@ -132,19 +134,9 @@ const DraggableGridItem = ({ currentItem, onDrop, footerComponent }) => {
   const handleRemoveLabel = (label) =>
     dispatch(attemptToggleLabel(authUser, currentItem, label));
 
-  const setSelectedNote = (e) => {
-    const { target } = e;
-
-    // Only open modal if user not clicking label/background button
-    const notButton = Array.prototype.some.call(
-      innerRef.current.children,
-      (child) => child === target
-    );
-
-    if (notButton) {
-      dispatch({ type: SET_SELECTED_NOTE, note: currentItem });
-      dispatch({ type: EDIT_NOTE_MODAL_OPEN_STATE, state: true });
-    }
+  const setSelectedNote = () => {
+    dispatch({ type: SET_SELECTED_NOTE, note: currentItem });
+    dispatch({ type: EDIT_NOTE_MODAL_OPEN_STATE, state: true });
   };
 
   const { title, text, labels, backgroundColor } = currentItem;
@@ -163,11 +155,15 @@ const DraggableGridItem = ({ currentItem, onDrop, footerComponent }) => {
       onClick={setSelectedNote}
       role="presentation"
     >
-      <div ref={innerRef} className={classes.inner}>
-        {title && <div className={classes.title}>{title}</div>}
-        <div className={classes.content}>{text}</div>
-        <NoteLabels clickable labels={labels} onRemove={handleRemoveLabel} />
-        {footerComponent}
+      <div className={classes.inner}>
+        <div className={classes.contentWrap}>
+          {title && <div className={classes.title}>{title}</div>}
+          <div className={classes.content}>{text}</div>
+        </div>
+        <div className={classes.footer}>
+          <NoteLabels clickable labels={labels} onRemove={handleRemoveLabel} />
+          {footerComponent}
+        </div>
       </div>
     </div>
   );

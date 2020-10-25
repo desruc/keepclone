@@ -1,6 +1,10 @@
 <h1 align="center">
-  A simplified Google Keep clone built with React
+  A Google Keep clone built with React
 </h1>
+
+<p align="center">
+<a href="https://keepclone.jmscmrn.com" style="font-size: 24px">View demo</a>
+</p>
 
 ## Why another Google Keep clone? 😫
 
@@ -9,9 +13,10 @@ The honest truth - I started playing around with React DnD for a work project an
 ## Features ⚡️
 
 - Written in modern React, only functional components with hooks
-- Custom webpack setup, no Create-React-App here!
+- Custom webpack setup!
 - Tests powered by testing-library and Jest
 - Firebase authentication and database provider
+- Material-UI
 
 ## Setting up development environment 🛠
 
@@ -20,7 +25,3 @@ The honest truth - I started playing around with React DnD for a work project an
 - `yarn install`
 - `yarn start`
 - The app should now be running on `http://localhost:8080/`
-
-## Author: James Cameron 👋🏻
-
-- Website: https://jmscmrn.com/

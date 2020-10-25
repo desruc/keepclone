@@ -1,5 +1,5 @@
 {
-  "name": "keep-it",
+  "name": "keepclone",
   "version": "1.0.0",
   "description": "a google keep clone built with React",
   "main": "index.js",

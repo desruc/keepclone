@@ -6,6 +6,10 @@
 <a href="https://keepclone.jmscmrn.com" style="font-size: 24px">View demo</a>
 </p>
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/36631337/97299324-86c7b100-18a0-11eb-802d-212268b0b941.png" alt="keepclone" />
+</p>
+
 ## Why another Google Keep clone? 😫
 
 The honest truth - I started playing around with React DnD for a work project and things got a little out of hand!
